@@ -102,6 +102,19 @@ public class PatientManagement {
 		else
 			System.out.println("Test TEC-101 step 2 passed");
 
+		//step 3
+		//view all expected elements in patient list page
+		WebElement setup = webDriver.findElement(By.className("user-initials"));
+		WebElement search = webDriver.findElement(By.id("search-patient"));
+		WebElement addPatient = webDriver.findElement(By.cssSelector("#root > div > span > div.app > div.main-view > div > div.patient-bar > div > div.button.button-primary.undefined > i"));
+		WebElement numberPatients = webDriver.findElement(By.cssSelector("#root > div > span > div.app > div.main-view > div > h2"));
+		WebElement tableColumn1 = webDriver.findElement(By.cssSelector("#root > div > span > div.app > div.main-view > div > div.patient-table > div.react-bootstrap-table > table > thead > tr > th:nth-child(2)"));
+		WebElement tableColumn2 = webDriver.findElement(By.cssSelector("#root > div > span > div.app > div.main-view > div > div.patient-table > div.react-bootstrap-table > table > thead > tr > th:nth-child(3)"));
+		WebElement tableColumn3 = webDriver.findElement(By.cssSelector("#root > div > span > div.app > div.main-view > div > div.patient-table > div.react-bootstrap-table > table > thead > tr > th:nth-child(4)"));
+		WebElement tableColumn4 = webDriver.findElement(By.cssSelector("#root > div > span > div.app > div.main-view > div > div.patient-table > div.react-bootstrap-table > table > thead > tr > th:nth-child(5)"));
+		WebElement tableColumn5 = webDriver.findElement(By.cssSelector("#root > div > span > div.app > div.main-view > div > div.patient-table > div.react-bootstrap-table > table > thead > tr > th:nth-child(6)"));
+		System.out.println("Test TEC-101 step 3 passed");
+		
+		
 	}
-
 }
