@@ -3,9 +3,11 @@ package technician;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * PatientManagement class run all patient management environment It has 6 tests
@@ -18,6 +20,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class PatientManagement {
 
 	private WebDriver webDriver;
+	private WebElement patients;
 	private String baseURL;
 	private String driverFilePath;
 
@@ -86,7 +89,7 @@ public class PatientManagement {
 		if (expectedURL.equals(actualURL1))
 			System.out.println("Test TEC-101 step 1 passed");
 		else
-			System.out.println("Test TEC-101 step 1 passed");
+			System.out.println("Test TEC-101 step 1 fialed");
 
 		// step 2
 		// click on first patient in list and enter to patient folder
@@ -100,7 +103,7 @@ public class PatientManagement {
 		if (expectedURL.equals(actualURL2))
 			System.out.println("Test TEC-101 step 2 passed");
 		else
-			System.out.println("Test TEC-101 step 2 passed");
+			System.out.println("Test TEC-101 step 2 fialed");
 
 		// step 3
 		// view all expected elements in patient list page
@@ -214,14 +217,18 @@ public class PatientManagement {
 		if (expectedURL2.equals(actualURL3))
 			System.out.println("Test TEC-101 step 9 passed");
 		else
-			System.out.println("Test TEC-101 step 9 passed");
+			System.out.println("Test TEC-101 step 9 failed");
 		patients.click();
-
 	}
 
 //search patient in list
 	public void Tec102() {
 
+		// print all patients in center
+		WebElement titleList = webDriver.findElement(By.className("list-title"));
+		String patientTitleList = titleList.getAttribute("innerHTML");
+		System.out.println(titleList);
+		System.out.println("There are " + patientTitleList + " patients in list");
 		WebElement searchInList = webDriver.findElement(By.id("search-patient"));
 		searchInList.sendKeys("a");
 		try {
@@ -230,31 +237,95 @@ public class PatientManagement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		searchInList.clear();
-		try {
-			Thread.sleep(80000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		WebElement titleList1 = webDriver.findElement(By.className("list-title"));
+		String patientTitleList1 = titleList1.getAttribute("innerHTML");
+		// System.out.println(titleList1);
+		System.out.println("There are " + patientTitleList1 + " patients in list");
+
+		if (patientTitleList.equals(patientTitleList1))
+			System.out.println("Test TEC-102 step 1 failed");
+		else
+			System.out.println("Test TEC-102 step 1 passed");
+
 		WebElement clearList = webDriver.findElement(By.className("clear"));
 		clearList.click();
 		searchInList.sendKeys("b");
 		try {
-			Thread.sleep(80000);
+			Thread.sleep(9000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		searchInList.clear();
-		try {
-			Thread.sleep(8000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		WebElement titleList2 = webDriver.findElement(By.className("list-title"));
+		String patientTitleList2 = titleList2.getAttribute("innerHTML");
+		// System.out.println(titleList2);
+		System.out.println("There are " + patientTitleList2 + " patients in list");
+
+		if (patientTitleList1.equals(patientTitleList2))
+			System.out.println("Test TEC-102 step 2 failed");
+		else
+			System.out.println("Test TEC-102 step 2 passed");
+
+		WebElement clearList2 = webDriver.findElement(By.cssSelector(
+				"#root > div > span > div.app > div.main-view > div > div.patient-bar > div > div.form-group > i"));
+		clearList2.click();
 	}
 
+	// create new patient
+	public void Tec103() {
+		// step 1:
+		String expectedURL1 = "https://alpha.audyx.com/technician#/patients";
+		String actualURL4 = webDriver.getCurrentUrl();
+		if (expectedURL1.equals(actualURL4))
+			System.out.println("Test TEC-103 step 1 passed");
+		else
+			System.out.println("Test TEC-103 step 1 fialed");
+		// step 2:
+		WebElement addNewPatient = webDriver
+				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[1]/div/div[2]"));
+		addNewPatient.click();
+
+		String expectedURL2 = "https://alpha.audyx.com/technician#/patient/create";
+		String actualURL5 = webDriver.getCurrentUrl();
+		if (expectedURL2.equals(actualURL5))
+			System.out.println("Test TEC-103 step 2 passed");
+		else
+			System.out.println("Test TEC-103 step 2 fialed");
+		// step3:
+
+		WebElement firstName = webDriver.findElement(By.id("firstname"));
+		firstName.sendKeys("Test");
+		WebElement lastName = webDriver.findElement(By.id("name"));
+		lastName.sendKeys("Automation");
+		WebElement birthdate = webDriver.findElement(By.id("birthdate"));
+		birthdate.sendKeys("09022012");
+		// select school and grade
+		/*
+		 * WebElement school = webDriver.findElement( By.className("first")); Select
+		 * selectSchool = new Select(school);
+		 * selectSchool.selectByVisibleText("Public school");
+		 */
+
+		// save button
+		WebElement saveNewPatient = webDriver
+				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[4]/div[2]"));
+		String saveButton = saveNewPatient.getAttribute("innerHTML");
+		System.out.println(saveButton);
+		boolean enable = saveNewPatient.isEnabled();
+		if (enable)
+			System.out.println("Test TEC-103 step 3 passed");
+		else
+			System.out.println("Test TEC-103 step 3 failed");
+
+		firstName.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		firstName.sendKeys("New patient");
+
+	}
 }
