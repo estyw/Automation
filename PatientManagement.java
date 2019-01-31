@@ -8,8 +8,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.apache.commons.lang3.test.*;
-import org.apache.commons.codec.language.*;
 
 /**
  * PatientManagement class run all patient management environment It has 6 tests
@@ -263,38 +261,78 @@ public class PatientManagement {
 				.click();
 	}
 
-//========================================================================================================================================
-	/*
-	 * public static void checkRnadom3() { webDriver.findElement(By.xpath(
-	 * "//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[1]/div/div[2]")).click();
-	 * WebElement patientName = webDriver.findElement(By.id("firstname"));
-	 * patientName.sendKeys("First" + " - " + "Patient" + " - " +
-	 * RandomStringUtils.randomAlphabetic(3) + RandomStringUtils.randomNumeric(3));
-	 * String a = patientName.getText(); System.out.println(a); }
-	 * 
-	 * public void Tec100() { PatientManagement.checkRnadom3(); }
-	 */
 	// ========================================================================================================================================
 	// create new patient
 	public void Tec103() {
 		// step 1:
+		// make sure you are in patient list screen
 		PatientManagement.checkUrl("https://alpha.audyx.com/technician#/patients", webDriver.getCurrentUrl(),
 				"Test TEC-103 step 1");
 		// -----------------------------------------------------------------------------------------------------------------------------
 		// step 2:
-		// go to patient creation page
+		// go to patient creation page by clicking the + add new patient button
 		webDriver.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[1]/div/div[2]")).click();
 		PatientManagement.checkUrl("https://alpha.audyx.com/technician#/patient/create", webDriver.getCurrentUrl(),
 				"Test TEC-103 step 2");
 		// -----------------------------------------------------------------------------------------------------------------------------
-		// step3:
-		// fill in all details w/o gender
+		// Step 3:
+		// cancel adding new patient
+		webDriver.findElement(By.className("cancel")).click();
+		PatientManagement.checkUrl("https://alpha.audyx.com/technician#/patients", webDriver.getCurrentUrl(),
+				"Test TEC-103 step 3");
+		// -----------------------------------------------------------------------------------------------------------------------------
+		// Step 4:
+		// check if modal of leaving activity appears when cancel adding new patient
+		// click on add new patient
+		webDriver.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[1]/div/div[2]")).click();
+		// click on gender
+		webDriver
+				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[1]/div[2]/ul/li[1]/label"))
+				.click();
+		webDriver.findElement(By.className("cancel")).click();
+
+		WebElement leaveActivity = webDriver.findElement(By.className("modal-content "));
+		if (leaveActivity.isDisplayed())
+			System.out.println("Test TEC-103 step 4 passed");
+		// -----------------------------------------------------------------------------------------------------------------------------
+		// Step 5:
+		// click on leaving activity on modal when cancel adding new patient
+		webDriver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div/div[3]/div/div[1] ")).click();
+		PatientManagement.checkUrl("https://alpha.audyx.com/technician#/patients", webDriver.getCurrentUrl(),
+				"Test TEC-103 step 5");
+		// -----------------------------------------------------------------------------------------------------------------------------
+		// Step 6:
+		// Click on add new patient, fill some details then click cancel,
+		// in leaving activity modal click on “Continue the activity”
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		webDriver.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[1]/div/div[2]")).click();
+
+		
 		WebElement firstName = webDriver.findElement(By.id("firstname"));
 		PatientManagement.insertText(firstName, "Test");
+		webDriver.findElement(By.className("cancel")).click();
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		webDriver.findElement(By.xpath(" //*[@id=\"root\"]/div/div/div[2]/div/div/div[3]/div/div[2]")).click();
+		PatientManagement.checkUrl("https://alpha.audyx.com/technician#/patient/create", webDriver.getCurrentUrl(),
+				"Test TEC-103 step 6");
+		// -----------------------------------------------------------------------------------------------------------------------------
+		// step7:
+		// fill in all details w/o gender
+
 		WebElement lastName = webDriver.findElement(By.id("name"));
 		PatientManagement.insertText(lastName, "Automation");
-		WebElement birthdate = webDriver.findElement(By.id("birthdate"));
-		PatientManagement.insertText(birthdate, "09022012");
 
 		try {
 			Thread.sleep(4000);
@@ -327,7 +365,7 @@ public class PatientManagement {
 		// save button WebElement
 		WebElement saveNewPatient = webDriver
 				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[4]/div[2]"));
-		PatientManagement.checkButtonClickable(saveNewPatient, "Test TEC-103 step 3");
+		PatientManagement.checkButtonClickable(saveNewPatient, "Test TEC-103 step 7");
 
 		try {
 			Thread.sleep(3000);
@@ -336,7 +374,7 @@ public class PatientManagement {
 			e.printStackTrace();
 		}
 		// -----------------------------------------------------------------------------------------------------------------------------
-		// step 4
+		// step 8
 		// choose gender but not fill in first name
 		firstName.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 		webDriver
@@ -349,12 +387,11 @@ public class PatientManagement {
 			e.printStackTrace();
 		}
 
-		
 		lastName.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 		lastName.sendKeys("Automation2");
 
 		WebElement validMessage = webDriver.findElement(By.className("validation-message"));
-		PatientManagement.checkValidMessage(validMessage, "Test TEC-103 step 4");
+		PatientManagement.checkValidMessage(validMessage, "Test TEC-103 step 8");
 
 		try {
 			Thread.sleep(4000);
@@ -363,17 +400,37 @@ public class PatientManagement {
 			e.printStackTrace();
 		}
 		// -----------------------------------------------------------------------------------------------------------------------------
-		// step 6
+		// step 9
+		// enter date smaller than 1900
+		WebElement birthdate = webDriver.findElement(By.id("birthdate"));
+		PatientManagement.insertText(birthdate, "09021899");
+		WebElement validMessage2 = webDriver.findElement(
+				By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[1]/div[2]/div[2]/label[2]"));
+		if (validMessage2.isDisplayed())
+			System.out.println("Test TEC-103 step 9 passed");
+
+		// -----------------------------------------------------------------------------------------------------------------------------
+
+		// step 10
+		// enter future date
+		PatientManagement.insertText(birthdate, "09022030");
+		if (validMessage2.isDisplayed())
+			System.out.println("Test TEC-103 step 10 passed");
+
+		// -----------------------------------------------------------------------------------------------------------------------------
+		// step 11
 		// fill in all details and move to patient folder
 		PatientManagement.insertText(firstName, "Test3");
 		PatientManagement.insertText(lastName, "Automation3" + "-" + RandomStringUtils.randomNumeric(2));
+		PatientManagement.insertText(birthdate, "09022000");
+	
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		PatientManagement.checkButtonClickable(saveNewPatient, "Test TEC-103 step 6.1");
+		PatientManagement.checkButtonClickable(saveNewPatient, "Test TEC-103 step 11.1");
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -381,11 +438,11 @@ public class PatientManagement {
 			e.printStackTrace();
 		}
 		saveNewPatient.click();
-		
+
 		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		WebElement testProtocols = webDriver
 				.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[1]/span[1]"));
-		System.out.println("Test TEC-103 step 6.2 passed");
+		System.out.println("Test TEC-103 step 11.2 passed");
 	}
 
 //=====================================================================================================================================
