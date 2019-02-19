@@ -292,14 +292,15 @@ public class PatientManagement {
 		webDriver.findElement(By.className("cancel")).click();
 
 		WebElement leaveActivity = webDriver.findElement(By.className("modal-content "));
-		if (leaveActivity.isDisplayed())
-			System.out.println("Test TEC-103 step 4 passed");
+		PatientManagement.checkValidMessage(leaveActivity, "Test TEC-103 step 4");
+
 		// -----------------------------------------------------------------------------------------------------------------------------
 		// Step 5:
 		// click on leaving activity on modal when cancel adding new patient
+		PatientManagement.tryCatch();
 		webDriver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div/div[3]/div/div[1] ")).click();
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(8000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -317,9 +318,9 @@ public class PatientManagement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+//click again in add new patient
 		webDriver.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[1]/div/div[2]")).click();
-
+		PatientManagement.tryCatch();
 		WebElement firstName = webDriver.findElement(By.id("firstname"));
 		PatientManagement.insertText(firstName, "Test");
 		webDriver.findElement(By.className("cancel")).click();
@@ -340,33 +341,19 @@ public class PatientManagement {
 		WebElement lastName = webDriver.findElement(By.id("name"));
 		PatientManagement.insertText(lastName, "Automation");
 
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PatientManagement.tryCatch();
 		// select school and grade
 		webDriver
 				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[2]/div[2]/div[1]/div/div"))
 				.click();
 		webDriver.findElement(By.xpath("//*[@id=\"1\"]/div")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PatientManagement.tryCatch();
 		webDriver
 				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[2]/div[2]/div[2]/div/div"))
 				.click();
 		webDriver.findElement(By.xpath("//*[@id=\"2\"]/div")).click();
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PatientManagement.tryCatch();
+		PatientManagement.tryCatch();
 
 		// save button WebElement
 		WebElement saveNewPatient = webDriver
@@ -386,18 +373,14 @@ public class PatientManagement {
 		webDriver
 				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[1]/div[2]/ul/li[1]/label"))
 				.click();
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PatientManagement.tryCatch();
+		PatientManagement.tryCatch();
 
 		lastName.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 		lastName.sendKeys("Automation2");
 
-		WebElement validMessage = webDriver.findElement(By.className("validation-message"));
-		PatientManagement.checkValidMessage(validMessage, "Test TEC-103 step 8");
+		WebElement requiredField = webDriver.findElement(By.className("validation-message"));
+		PatientManagement.checkValidMessage(requiredField, "Test TEC-103 step 8");
 
 		try {
 			Thread.sleep(4000);
@@ -412,37 +395,29 @@ public class PatientManagement {
 		PatientManagement.insertText(birthdate, "09021899");
 		WebElement validMessage2 = webDriver.findElement(
 				By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/form/div[1]/div[2]/div[2]/label[2]"));
-		if (validMessage2.isDisplayed())
-			System.out.println("Test TEC-103 step 9 passed");
+		PatientManagement.checkValidMessage(validMessage2, "Test TEC-103 step 9");
+		// if (validMessage2.isDisplayed())
+		// System.out.println("Test TEC-103 step 9 passed");
 
 		// -----------------------------------------------------------------------------------------------------------------------------
 
 		// step 10
 		// enter future date
 		PatientManagement.insertText(birthdate, "09022030");
-		if (validMessage2.isDisplayed())
-			System.out.println("Test TEC-103 step 10 passed");
+		PatientManagement.checkValidMessage(validMessage2, "Test TEC-103 step 10");
+		// (validMessage2.isDisplayed())
+		// System.out.println("Test TEC-103 step 10 passed");
 
 		// -----------------------------------------------------------------------------------------------------------------------------
 		// step 11
 		// fill in all details and move to patient folder
-		PatientManagement.insertText(firstName, "Test3");
-		PatientManagement.insertText(lastName, "Automation3" + "-" + RandomStringUtils.randomNumeric(2));
+		PatientManagement.insertText(firstName, "Test");
+		PatientManagement.insertText(lastName, "Automation" + "-" + RandomStringUtils.randomNumeric(2));
 		PatientManagement.insertText(birthdate, "09022000");
 
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PatientManagement.tryCatch();
 		PatientManagement.checkButtonClickable(saveNewPatient, "Test TEC-103 step 11.1");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PatientManagement.tryCatch();
 		saveNewPatient.click();
 
 		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -455,9 +430,11 @@ public class PatientManagement {
 	public void Tec104() {
 		// step 1:
 		// view all elements in patient page screen
-		WebElement patientInList = webDriver.findElement(By.cssSelector(
-				" #root > div > span > div.app > div.main-view > div > div.patient-table > div.react-bootstrap-table > table > tbody > tr:nth-child(1) > td:nth-child(2) > div"));
-		patientInList.click();
+		// WebElement patientInList = webDriver.findElement(By.cssSelector(
+		// " #root > div > span > div.app > div.main-view > div > div.patient-table >
+		// div.react-bootstrap-table > table > tbody > tr:nth-child(1) > td:nth-child(2)
+		// > div"));
+		// patientInList.click();
 
 		WebElement protoclLink = webDriver.findElement(By.cssSelector(
 				"  #root > div > span > div.app > div.main-view > div > div.patient-navigation > div.tabs-navbar > span.item.active"));
@@ -490,8 +467,7 @@ public class PatientManagement {
 		// -----------------------------------------------------------------------------------------------------------------------------
 		// step 4:
 		// changing patient status
-		// WebElement status1 = webDriver.findElement(By.className("status"));
-		// status1.click();
+
 		WebElement waitingStatus = webDriver.findElement(By.className("WAITING"));
 		waitingStatus.click();
 		WebElement status2 = webDriver.findElement(By.className("WAITING"));
@@ -541,38 +517,176 @@ public class PatientManagement {
 		WebElement testProtocols = webDriver
 				.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[1]/span[1]"));
 		testProtocols.click();
-		
-		WebElement protocolStatus = webDriver
-				.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[2]/div/div[10]/div[1]/span"));
-		WebElement protocolTime = webDriver
-				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[2]/div/div[10]/div[2]/div"));
-		System.out.println("Test TEC-202 step 7 passed");
+
+		WebElement protocolStatus = webDriver.findElement(
+				By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[2]/div/div[10]/div[1]/span"));
+		WebElement protocolTime = webDriver.findElement(
+				By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[2]/div/div[10]/div[2]/div"));
+		System.out.println("Test TEC-202 step 6 passed");
 	}
-	
 
 	// =====================================================================================================================================
 	public void Tec202() {
-		//go to patient list then click on first patient
+		// go to patient list then click on first patient
 		WebElement patientsList = webDriver.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[2]/a/span"));
 		patientsList.click();
 		PatientManagement.tryCatch();
-		WebElement patientFirst = webDriver.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[1]/table/tbody/tr[1]/td[2]/div"));
+		WebElement patientFirst = webDriver.findElement(
+				By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[1]/table/tbody/tr[1]/td[2]/div"));
 		patientFirst.click();
 		PatientManagement.tryCatch();
 		WebElement protocol = webDriver.findElement(By.className("patient-protocol"));
-		//protocol.click();
+
 		PatientManagement.tryCatch();
 		System.out.println("Test TEC-202 step 1 passed");
-		
+
 		WebElement statusProtocol = webDriver.findElement(By.className("protocol-status"));
 		WebElement nameProtocol = webDriver.findElement(By.className("protocol-name"));
 		WebElement timeProtocol = webDriver.findElement(By.className("estimated-duration"));
-		
+
 		String status = statusProtocol.getAttribute("innerHTML");
-		String estimate =  timeProtocol.getAttribute("innerHTML");
+		String estimate = timeProtocol.getAttribute("innerHTML");
 		if (status.equals("Not done") && (estimate.contains("Estimate")))
-			System.out.println("Test TEC-202 step 2 passed");	
-			
+			System.out.println("Test TEC-202 step 2 passed");
+
+	}
+	// =====================================================================================================================================
+
+	public void Tec203() {
+		// go to patient list then click on first patient
+		PatientManagement.tryCatch();
+		PatientManagement.configureOtoscope();
+		WebElement patientsList = webDriver.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[2]/a/span"));
+		patientsList.click();
+		PatientManagement.checkUrl("https://alpha.audyx.com/technician#/patients", webDriver.getCurrentUrl(),
+				"Test TEC-203 step 1");
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement patientFirst = webDriver.findElement(
+				By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[1]/table/tbody/tr[1]/td[2]/div"));
+		patientFirst.click();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PatientManagement.firstVisitProtocolDev();
+		// go over the top bar area
+		WebElement patientName = webDriver.findElement(By.className("patient"));
+		WebElement protocolName = webDriver.findElement(By.className("protocol"));
+		WebElement stepsRuler = webDriver.findElement(By.className("steps"));
+		// go over the left area
+		WebElement blockingScreen = webDriver.findElement(By.className("blocking-instructions"));
+		WebElement instructionsZone = webDriver.findElement(By.className("protocol-instructions"));
+		WebElement nextButton = webDriver.findElement(By.className("continue-action"));
+		nextButton.click();
+		PatientManagement.tryCatch();
+		WebElement continueButton = webDriver.findElement(By.className("next-action"));
+		continueButton.click();
+		PatientManagement.tryCatch();
+		WebElement continueFirstStep = webDriver.findElement(By.className("button"));
+		if (continueFirstStep.isEnabled())
+			System.out.println("Test TEC-801 step 4 passed");
+		// go over the right area
+		WebElement mainView = webDriver.findElement(By.className("main-view"));
+		System.out.println("Test TEC-203 step 2 passed");
+
+		webDriver.get("https://alpha.audyx.com/technician#/patients");
+		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+	}
+
+	// =====================================================================================================================================
+	public void Tec204() {
+       // start run protocol firstVisitProtocolDevFull()
+
+		PatientManagement.configureOtoscope();
+		WebElement patientsList = webDriver.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[2]/a/span"));
+		patientsList.click();
+		PatientManagement.tryCatch();
+		PatientManagement.tryCatch();
+		// click on first patient in list
+		WebElement patientInList = webDriver.findElement(
+				By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[1]/table/tbody/tr[1]/td[2]/div"));
+		patientInList.click();
+		PatientManagement.tryCatch();
+		PatientManagement.firstVisitProtocolDev();
+		// click next in instructions page in order to start the test
+		WebElement nextButton = webDriver.findElement(By.className("continue-action"));
+		nextButton.click();
+		PatientManagement.tryCatch();
+		WebElement continueButton = webDriver.findElement(By.className("next-action"));
+		continueButton.click();
+		PatientManagement.tryCatch();
+		WebElement Questionnaire = webDriver.findElement(By.xpath("//*[@id=\"index-0\"]/div[2]"));
+		System.out.println("Test TEC-301 step 1 passed ");
+		// mark all mandatory fields of questionnaire
+		// trying to continue w/o marking the mandatory field- check if valid message
+		// appears
+		WebElement continueStep = webDriver.findElement(
+				By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div/div/div/div/div[2]/div[3]/div"));
+		continueStep.click();
+		PatientManagement.tryCatch();
+		WebElement validMessage = webDriver.findElement(By.className("validation-message"));
+		System.out.println("Test TEC-301 step 2 passed ");
+		continueStep.click();
+		PatientManagement.tryCatch();
+		WebElement checkBox = webDriver.findElement(By.className("checkbox-input"));
+		checkBox.click();
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		System.out.println("Test TEC-301 step 3 passed ");
+		WebElement prevStep = webDriver.findElement(
+				By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div/div/div/div/div[2]/div[1]/div"));
+		prevStep.click();
+		if (checkBox.isDisplayed())
+			System.out.println("Test TEC-301 step 4 passed ");
+		continueStep.click();
+		webDriver.findElement(By.className("radio-input")).click();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		// fill in some strings in mandatory field
+		WebElement textArea = webDriver.findElement(By.id("AX_Q5"));
+		textArea.sendKeys("abc");
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		WebElement intArea = webDriver.findElement(By.id("AX_Q6"));
+		textArea.sendKeys("123");
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		continueStep.click();
+		PatientManagement.tryCatch();
+		// first step is marked with V
+		WebElement stepDone = webDriver.findElement(By.className("done"));
+		WebElement stepActive = webDriver.findElement(By.className("active"));
+		System.out.println("Test TEC-204 step 1 passed ");
+	}
+
+	// =====================================================================================================================================
+	public static void vocal() {
+	WebElement firstPlay = webDriver.findElement(By    ;
+	firstPlay.click();
+	PatientManagement.tryCatch();
+	WebElement yes = webDriver.findElement(arg0) ;
+	WebElement no = webDriver.findElement(arg0) ;
+	
+	
 	}
 	// =====================================================================================================================================
 
@@ -642,6 +756,7 @@ public class PatientManagement {
 //-------------------------------------------------------------
 	public static void tonalBinAbove70() {
 		for (int i = 0; i < 2; i++) {
+
 			WebElement play = webDriver.findElement(
 					By.xpath("  //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div/div/span/div/div[4]/i[2]"));
 			WebElement yes = webDriver.findElement(
@@ -694,6 +809,7 @@ public class PatientManagement {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
 		// check if hearing loss is changed to red
 		PatientManagement.tryCatch();
@@ -792,9 +908,9 @@ public class PatientManagement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
+// -------------------------------------------------
 	public static void createNewPatient() {
 
 		WebElement patientPage = webDriver.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[2]/a/span"));
@@ -872,6 +988,56 @@ public class PatientManagement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		WebElement avatarRight = webDriver
+				.findElement(By.xpath("//*[@id=\"root\"]/div/span/div[1]/div[3]/div/div/div/span/div/div[6]"));
+		System.out.println("Test TEC-203 step 3 passed ");
+	}
+
+	// go to fitst visit protocol dev protocol
+	public static void firstVisitProtocolDev() {
+
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement firstVisitDev = webDriver
+				.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[2]/div/div[4]"));
+		firstVisitDev.click();
+		try {
+			Thread.sleep(800);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		WebElement startModal = webDriver.findElement(By.xpath(
+				" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[2]/div[2]/div[2]/div[2]/div/div/div[2]/div/div"));
+		startModal.click();
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void configureOtoscope() {
+		WebElement init = webDriver.findElement(By.className("user-initials"));
+		init.click();
+		PatientManagement.tryCatch();
+		WebElement setup = webDriver.findElement(By.className("setup"));
+		setup.click();
+		PatientManagement.tryCatch();
+		PatientManagement.checkUrl("https://alpha.audyx.com/technician#/setup", webDriver.getCurrentUrl(),
+				"Test TEC-401 step 1");
+		WebElement openOtoscopelist = webDriver
+				.findElement(By.xpath(" //*[@id=\"root\"]/div/span/div[1]/div[3]/div/div[1]/div/div/div/i"));
+		openOtoscopelist.click();
+		PatientManagement.tryCatch();
+		WebElement selectOtoscopeDevice = webDriver.findElement(By.className("HP"));
+		selectOtoscopeDevice.click();
 	}
 
 	public static void checkUrl(String expectedUrl, String actualUrl, String currentStep) {
