@@ -4,10 +4,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 /**
  * PatientManagement class run all patient management environment It has 6 tests
@@ -22,7 +22,7 @@ public class Configuration {
 	private String driverFilePath;
 
 	/**
-	 * Constructor of PatientManagement class
+	 * Constructor of Configuration class
 	 * 
 	 * @param baseURL        - the URL that's given
 	 * @param driverFilePath - the path of driver location
@@ -61,6 +61,38 @@ public class Configuration {
 		Temp.tryCatch(10000);
 	}
 
+	// =======================================================================================================================
+	public void CFG101() {
+		// click on side bar menu then click on configuration icon
+		webDriver.findElement(By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[1]/div[1]/div[1]")).click();
+		Temp.tryCatch(1000);
+		webDriver.findElement(By.xpath(" //*[@id=\"menu-side\"]/div[5]/div ")).click();
+		Temp.tryCatch(3000);
+		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-101 step 1");
+
+		// click on user name icon - configuration screen appears
+		WebElement mainPanel = webDriver.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div"));
+		Actions act = new Actions(webDriver);
+		act.moveToElement(mainPanel).perform();
+		Temp.tryCatch(1000);
+		WebElement userIcon = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[1]"));
+		userIcon.click();
+		Temp.tryCatch(3000);
+		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-101 step 2");
+
+		// check all elements appears in this page
+		WebElement userDetails = webDriver
+				.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]"));
+		WebElement usersInCenter = webDriver
+				.findElement(By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[2]"));
+		WebElement centerDetails = webDriver
+				.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]"));
+		WebElement cabinArea = webDriver
+				.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]"));
+		System.out.println(" Test CFG-101 step 3");
+	}
+
+//=======================================================================================================================
 	public void CFG201() {
 		// step 1 - go to configuration screen and view all center details
 		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
@@ -84,6 +116,7 @@ public class Configuration {
 		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-201 step 2");
 
 		// edit center name and cancel editing -check the center name wasn't changed
+
 		WebElement centerPhone1 = webDriver.findElement(By.xpath(
 				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/p[1]/span[2]"));
 		String oldPhone = centerPhone1.getAttribute("innerHTML");
@@ -152,7 +185,8 @@ public class Configuration {
 		saveEdit2.click();
 	}
 
-//================================================================================
+//=======================================================================================================================
+
 	// change center
 	public void CFG202() {
 //choose another center and check of modal of switch center appears
@@ -207,6 +241,7 @@ public class Configuration {
 		System.out.println("==Test CFG-202 passed==");
 	}
 
+//=======================================================================================================================
 	// cabin view in configuration screen
 	public void CFG203() {
 		// these 3 lines should be removed when running all steps
@@ -256,14 +291,13 @@ public class Configuration {
 		System.out.println("==Test CFG-203 passed==");
 	}
 
+//=======================================================================================================================
 	// User details - in left side of configuration screen
 	public void CFG301() {
 		// check you are in configuration screen
 		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
-		configScreen.click();
-		Temp.tryCatch(1000);
-		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-301 step 1");
-// view all user details
+		Temp.configScreen(configScreen, "Test CFG-301 step 1");
+		// view all user details
 		WebElement userName1 = webDriver.findElement(By.xpath(
 				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[1]/h3"));
 		String userName11 = userName1.getAttribute("innerHTML");
@@ -317,6 +351,7 @@ public class Configuration {
 		System.out.println("==Test CFG-301 passed==");
 	}
 
+//=======================================================================================================================
 	public void CFG302() {
 		// check you are in configuration screen, then click add user
 		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
@@ -329,8 +364,10 @@ public class Configuration {
 		Temp.tryCatch(3000);
 // view add user panel
 		WebElement email = webDriver.findElement(By.id("email"));
-		WebElement userRole = webDriver.findElement(By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[1]/div[2]"));
-		WebElement language = webDriver.findElement(By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[1]/div[3]"));
+		WebElement userRole = webDriver.findElement(By.xpath(
+				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[1]/div[2]"));
+		WebElement language = webDriver.findElement(By.xpath(
+				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[1]/div[3]"));
 		WebElement cancel = webDriver.findElement(By.xpath(
 				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/a"));
 		WebElement submit = webDriver.findElement(By.xpath(
@@ -416,18 +453,110 @@ public class Configuration {
 				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/button"));
 		submit5.click();
 		Temp.tryCatch(5000);
-		System.out.println("Test CFG-302 step 10 passed");
+		System.out.println("Test CFG-302 step 12 passed");
 		WebElement existModal = webDriver.findElement(By.cssSelector(" body > div.modal.fade.in > div > div"));
-		System.out.println("Test CFG-302 step 11 passed");
+		System.out.println("Test CFG-302 step 13 passed");
 		WebElement acceptExistModal = webDriver
 				.findElement(By.cssSelector("body > div.modal.fade.in > div > div > div.modal-footer > button"));
 		acceptExistModal.click();
 		Temp.tryCatch(5000);
-		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-302 step 12");
+		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-302 step 14");
 		System.out.println("==Test CFG-302 passed==");
 
 	}
 
 //=======================================================================================================================
 
+	public void CFG303RemoveUser() {
+		// go to configuration screen
+		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
+		Temp.configScreen(configScreen, "Test CFG-303 step 1");
+		// click on garbage near user name
+		WebElement trashButton = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[3]/i"));
+		trashButton.click();
+		Temp.tryCatch(6000);
+		WebElement confirmTrashButton = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[1]"));
+		System.out.println("Test CFG-303 step 2 passed");
+
+// cancel delete user
+		WebElement cancelConfirmTrashButton = webDriver
+				.findElement(By.xpath("	//*[@id=\"collaborator-679\"]/div[1]/a"));
+		cancelConfirmTrashButton.click();
+		Temp.tryCatch(5000);
+		System.out.println("Test CFG-303 step 3 passed");
+///accept delete user - confirm modal appears
+		WebElement trashButton2 = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[3]/i"));
+		trashButton2.click();
+		Temp.tryCatch(5000);
+		WebElement unsubscribe = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[1]/button"));
+		unsubscribe.click();
+		Temp.tryCatch(5000);
+		WebElement confirmDeleteModal = webDriver.findElement(By.xpath(" /html/body/div[5]/div/div"));
+		System.out.println("Test CFG-303 step 4 passed");
+// cancel confirm modal of delete user
+		WebElement cancelConfirmDeleteModal = webDriver
+				.findElement(By.xpath(" /html/body/div[5]/div/div/form/div[2]/button[1]"));
+		cancelConfirmDeleteModal.click();
+		Temp.tryCatch(5000);
+		System.out.println("Test CFG-303 step 5 passed");
+// click on delete icon again, then enter incorrect password
+		WebElement trashButton3 = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[3]/i"));
+		trashButton3.click();
+		Temp.tryCatch(5000);
+		WebElement unsubscribe2 = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[1]/button"));
+		unsubscribe2.click();
+		Temp.tryCatch(5000);
+		// WebElement confirmDeleteModal = webDriver.findElement(By.xpath("
+		// /html/body/div[6]/div/div"));
+		WebElement pwArea = webDriver.findElement(By.xpath(" /html/body/div[5]/div/div/form/div[1]/input"));
+		pwArea.sendKeys("aa");
+		pwArea.click();
+		Temp.tryCatch(5000);
+		WebElement continueButton = webDriver.findElement(By.xpath("/html/body/div[5]/div/div/form/div[2]/button[2]"));
+		continueButton.click();
+		Temp.tryCatch(5000);
+		WebElement confirmDeleteModal2 = webDriver.findElement(By.xpath(" /html/body/div[5]/div/div"));
+		System.out.println("Test CFG-303 step 6 passed");
+
+	}
+
+	public void CFG304() {
+		// see all user details in list
+		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
+		Temp.configScreen(configScreen, "Test CFG-304 step 1");
+		WebElement userName = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-629\"]/div[2]/span"));
+		WebElement userPicture = webDriver
+				.findElement(By.xpath(" //*[@id=\"collaborator-629\"]/div[3]/div[1]/div/div"));
+		WebElement userRole = webDriver.findElement(By.xpath(" //*[@id=\"s2id_autogen1\"]/a/span[1]/span"));
+		WebElement userInvitation = webDriver.findElement(By.xpath(" //*[@id=\"invitation-376\"]/div[3]/div[1]/div"));
+		System.out.println("Test CFG-304 step 2 passed");
+
+		// change user role
+		WebElement oldRole = webDriver.findElement(By.xpath("//*[@id=\"s2id_autogen1\"]/a/span[1]/span"));
+		String currentRole = oldRole.getAttribute("inneHTML");
+		System.out.println(currentRole);
+		oldRole.click();
+		Temp.tryCatch(3000);
+		WebElement chooseAnotherRole = webDriver.findElement(By.xpath(" //*[@id=\"select2-drop\"]/ul/li[2]/div"));
+		chooseAnotherRole.click();
+		Temp.tryCatch(3000);
+		WebElement pwArea = webDriver.findElement(By.xpath(" /html/body/div[7]/div/div/form/div[1]/input"));
+		pwArea.sendKeys("123456Qw");
+		Temp.tryCatch(5000);
+		WebElement continueButton = webDriver.findElement(By.xpath(" /html/body/div[7]/div/div/form/div[2]/button[2]"));
+		continueButton.click();
+		Temp.tryCatch(5000);
+		System.out.println("Test CFG-304 step 3 passed");
+
+		// change again the role
+		WebElement userRole2 = webDriver.findElement(By.xpath(" //*[@id=\"s2id_autogen1\"]"));
+		userRole2.click();
+		Temp.tryCatch(3000);
+		WebElement chooseNewRole = webDriver.findElement(By.xpath("//*[@id=\"select2-drop\"]/ul/li[1]/div"));
+		chooseNewRole.click();
+		Temp.tryCatch(5000);
+		String newRole = userRole2.getAttribute("inneHTML");
+		System.out.println(newRole);
+		System.out.println("Test CFG-304 step 4");
+	}
 }
