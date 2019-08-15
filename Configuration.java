@@ -62,207 +62,183 @@ public class Configuration {
 	}
 
 	// =======================================================================================================================
-	public void CFG101() {
+	public void CFG101ConfigurationScreen() {
 		// click on side bar menu then click on configuration icon
-		webDriver.findElement(By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[1]/div[1]/div[1]")).click();
-		Temp.tryCatch(1000);
-		webDriver.findElement(By.xpath(" //*[@id=\"menu-side\"]/div[5]/div ")).click();
+		WebElement sideMenu = webDriver.findElement(By.cssSelector("#audyx-main .menu-bar .navigator"));
+		sideMenu.click();
+		Temp.tryCatch(6000);
+		WebElement configuration = webDriver.findElement(By.cssSelector("#menu-side :nth-child(5) .config"));
+		configuration.click();
 		Temp.tryCatch(3000);
 		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-101 step 1");
 
 		// click on user name icon - configuration screen appears
-		WebElement mainPanel = webDriver.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div"));
+		WebElement mainPanel = webDriver.findElement(By.id("audyx-main"));
 		Actions act = new Actions(webDriver);
 		act.moveToElement(mainPanel).perform();
 		Temp.tryCatch(1000);
-		WebElement userIcon = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[1]"));
+		WebElement userIcon = webDriver.findElement(By.cssSelector("#user-details .ad-name"));
 		userIcon.click();
 		Temp.tryCatch(3000);
 		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-101 step 2");
 
 		// check all elements appears in this page
-		WebElement userDetails = webDriver
-				.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]"));
+		WebElement userDetails = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-4 .panel.user-panel .panel-body .col-xs-3.col-lg-8"));
 		WebElement usersInCenter = webDriver
-				.findElement(By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[2]"));
-		WebElement centerDetails = webDriver
-				.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]"));
-		WebElement cabinArea = webDriver
-				.findElement(By.xpath("//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]"));
-		System.out.println(" Test CFG-101 step 3");
+				.findElement(By.cssSelector("#audyx-main .view-animate .col-lg-4 :nth-child(2) :nth-child(1).row"));
+		WebElement centerDetails = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6"));
+		WebElement cabinsArea = webDriver
+				.findElement(By.cssSelector("#audyx-main .col-lg-8 :nth-child(2) .cabins-container"));
+		System.out.println("Test CFG-101 step 3 passed");
 	}
 
 //=======================================================================================================================
-	public void CFG201() {
+	public void CFG201CenterDetails() {
 		// step 1 - go to configuration screen and view all center details
-		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
-		configScreen.click();
+		WebElement centerName = webDriver.findElement(By.cssSelector("#user-details .center-info"));
+		centerName.click();
 		Temp.tryCatch(1000);
 		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-201 step 1");
-		WebElement centerMap = webDriver
-				.findElement(By.cssSelector(" #map > div > div > div:nth-child(1) > div:nth-child(3)"));
-		WebElement centerPhone = webDriver
-				.findElement(By.cssSelector(" #map > div > div > div:nth-child(1) > div:nth-child(3)"));
-		WebElement centerMail = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/p[2]"));
-		WebElement centerAddress = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/p[3]"));
-		WebElement addUser = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/button[1]"));
-		WebElement dwonloadCenter = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/button[2]"));
-		WebElement editCenter = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/span"));
+		WebElement centerMap = webDriver.findElement(By.cssSelector("#map"));
+		// #audyx-main .view-animate .col-lg-8 .center-panel .panel-body
+		// .col-lg-6:nth-child(2)"));
+		WebElement editCenter = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6  .fa-pencil"));
+		WebElement centerPhone = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6 p:nth-child(4) .fa-phone"));
+		WebElement centerMail = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6 :nth-child(5) :nth-child(2)"));
+		WebElement centerAddress = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6 :nth-child(6) :nth-child(2)"));
+		WebElement addUser = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons :nth-child(1) .fa-plus"));
+		WebElement dwonloadCenter = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons :nth-child(2) .fa-download"));
 		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-201 step 2");
 
 		// edit center name and cancel editing -check the center name wasn't changed
 
-		WebElement centerPhone1 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/p[1]/span[2]"));
-		String oldPhone = centerPhone1.getAttribute("innerHTML");
-		System.out.println(oldPhone);
-
-		Temp.tryCatch(1000);
+		WebElement centerFax1 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6  p:nth-child(4) :nth-child(3) :nth-child(2)"));
+		String oldFax = Temp.printElementText(centerFax1);
+		Temp.tryCatch(2000);
 		editCenter.click();
 		Temp.tryCatch(3000);
-		WebElement centerPhone2 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/div/form/div[1]/div[1]/div[2]/div/div[2]/div/input"));
-		centerPhone2.click();
-		Temp.tryCatch(1000);
-		centerPhone2.clear();
-		centerPhone2.sendKeys("02020202");
-		WebElement cancelEdit = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/div/form/div[2]/div/div/a[1]"));
+		WebElement centerFax2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(2) :nth-child(1) .col-lg-6 :nth-child(2) :nth-child(3) .form-control"));
+		WebElement cancelEdit = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(2) :nth-child(4) a:nth-child(1)"));
+		Temp.editDetails(centerFax2, "02020202", cancelEdit);
 
-		cancelEdit.click();
-		Temp.tryCatch(6000);
-		WebElement centerPhone3 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/p[1]/span[2]"));
-		String newPhone = centerPhone3.getAttribute("innerHTML");
-		System.out.println(newPhone);
-		Temp.checkEqualString(oldPhone, newPhone, "Test CFG-201 step 3");
+		WebElement centerFax3 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6  p:nth-child(4) :nth-child(3) :nth-child(2)"));
+		String newFax = Temp.printElementText(centerFax3);
+		Temp.checkEqualString(oldFax, newFax, "Test CFG-201 step 3");
 
-		// edit center name and cancel editing -check the center name was changed
-		WebElement centerPhone4 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/p[1]/span[2]"));
-		String oldPhone2 = centerPhone4.getAttribute("innerHTML");
-		System.out.println(oldPhone2);
-		Temp.tryCatch(1000);
-		WebElement editCenter2 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/span"));
-		editCenter2.click();
+		// edit center Fax and save -check the center name was changed
+		WebElement centerFax4 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6  p:nth-child(4) :nth-child(3) :nth-child(2)"));
+		String oldFax2 = Temp.printElementText(centerFax4);
+		Temp.tryCatch(2000);
+		editCenter.click();
 		Temp.tryCatch(5000);
-		WebElement centerPhone5 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/div/form/div[1]/div[1]/div[2]/div/div[2]/div/input"));
-		centerPhone5.click();
-		Temp.tryCatch(7000);
-		centerPhone5.clear();
-		centerPhone5.sendKeys("02020202");
-		WebElement saveEdit = webDriver.findElement(By.xpath(
-				"//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/div/form/div[2]/div/div/a[2] "));
-		saveEdit.click();
-		Temp.tryCatch(5000);
-		WebElement centerPhone6 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/p[1]/span[2]"));
-		String newPhone2 = centerPhone6.getAttribute("innerHTML");
-		System.out.println(newPhone2);
-		Temp.checkDiffString(oldPhone2, newPhone2, "Test CFG-201 step 4");
+		WebElement centerFax5 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(2) :nth-child(1) .col-lg-6 :nth-child(2) :nth-child(3) .form-control"));
+		WebElement saveEdit = webDriver.findElement(By.cssSelector(
+				"#audyx-main .body .content .view-animate .main-content :nth-child(2).col-lg-8 .panel.center-panel .panel-body.row .col-sm-12 .edit-center .col-lg-12 .btn.btn-primary"));
+		Temp.editDetails(centerFax5, "02020202", saveEdit);
+
+		WebElement centerFax6 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(1) .display-center.col-lg-6  p:nth-child(4) :nth-child(3) :nth-child(2)"));
+		String newFax2 = Temp.printElementText(centerFax6);
+		Temp.checkDiffString(oldFax2, newFax2, "Test CFG-201 step 4");
 		System.out.println("==Test CFG-201 passed==");
 
-		// change again the phone number in order to pass next time testing it
-		WebElement editCenter3 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[1]/div/div[1]/span"));
-		editCenter3.click();
+		// change again the Fax number in order to pass next time testing it
+		editCenter.click();
 		Temp.tryCatch(5000);
-		WebElement centerPhone7 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/div/form/div[1]/div[1]/div[2]/div/div[2]/div/input"));
-		centerPhone7.click();
-		Temp.tryCatch(7000);
-		centerPhone7.clear();
-		centerPhone7.sendKeys("888888");
-		WebElement saveEdit2 = webDriver.findElement(By.xpath(
-				"//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/div/form/div[2]/div/div/a[2] "));
-		saveEdit2.click();
+		WebElement centerFax7 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel :nth-child(2) :nth-child(1) .col-lg-6 :nth-child(2) :nth-child(3) .form-control"));
+		WebElement saveEdit2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .body .content .view-animate .main-content :nth-child(2).col-lg-8 .panel.center-panel .panel-body.row .col-sm-12 .edit-center .col-lg-12 .btn.btn-primary"));
+		Temp.editDetails(centerFax7, "888888", saveEdit2);
+
 	}
 
 //=======================================================================================================================
 
 	// change center
-	public void CFG202() {
+	public void CFG202SwitchCenter() {
 //choose another center and check of modal of switch center appears
-		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
+		WebElement configScreen = webDriver.findElement(By.cssSelector("#user-details .center-info"));
 		configScreen.click();
 		Temp.tryCatch(1000);
-		WebElement centerName1 = webDriver.findElement(By.xpath(" //*[@id=\"user-details\"]/span/div/span[2]"));
+		WebElement centerName1 = webDriver.findElement(By.cssSelector("#user-details .center-info"));
 		String centerName11 = centerName1.getAttribute("innerHTML");
 		System.out.println("Current Center name is: " + centerName11);
-		// centerName1.click();
+
 		Temp.tryCatch(2000);
-		WebElement changeCenter1 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[2]/div/div[3]/table/tbody/tr[1]/td[3]/button"));
+		WebElement changeCenter1 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-4 .panel.user-panel ng-include .panel-body .col-xs-6.col-lg-12 table  tbody :nth-child(2) :nth-child(3) button"));
 		changeCenter1.click();
 		Temp.tryCatch(2000);
-		WebElement stayInCenter = webDriver
-				.findElement(By.cssSelector(" body > div.modal.fade.in > div > div > div.modal-footer > a"));
+		WebElement stayInCenter = webDriver.findElement(By.cssSelector("body .modal.fade.in .modal-footer a"));
 		System.out.println("Test CFG-202 step 1 passed");
 
 //click on stay in current center
 		stayInCenter.click();
 		Temp.tryCatch(2000);
-		WebElement centerName2 = webDriver.findElement(By.xpath(" //*[@id=\"user-details\"]/span/div/span[2]"));
+		WebElement centerName2 = webDriver.findElement(By.cssSelector("#user-details .center-info"));
 		String centerName22 = centerName2.getAttribute("innerHTML");
 		System.out.println("Current Center name is: " + centerName22);
 		Temp.checkEqualString(centerName11, centerName22, "Test CFG-202 step 2");
 
 // change center and accept the change
-		WebElement changeCenter2 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[2]/div/div[3]/table/tbody/tr[1]/td[3]/button"));
+		WebElement changeCenter2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-4 .panel.user-panel ng-include .panel-body .col-xs-6.col-lg-12 table  tbody :nth-child(2) :nth-child(3) button"));
 		changeCenter2.click();
 		Temp.tryCatch(2000);
-		WebElement acceptChange = webDriver
-				.findElement(By.cssSelector("body > div.modal.fade.in > div > div > div.modal-footer > button "));
+		WebElement acceptChange = webDriver.findElement(By.cssSelector("body .modal.fade.in .modal-footer button"));
 		acceptChange.click();
 		Temp.tryCatch(8000);
-		if (centerName2.getText().equals("centerName22 "))
-			System.out.println("Test CFG-202 step 3 failed");
-		else
-			System.out.println("Test CFG-202 step 3 passed");
+		Temp.checkDiffString(centerName2.getText(), centerName22, "Test CFG-202 step 3");
 
-// return back to previous center
-		webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[2]/div/div[3]/table/tbody/tr[2]/td[3]/button"))
-				.click();
+		// return back to previous center
+
+		WebElement changeCenter3 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-4 .panel.user-panel ng-include .panel-body .col-xs-6.col-lg-12 table tbody :nth-child(1) :nth-child(3) button"));
 		Temp.tryCatch(4000);
-		WebElement acceptChange2 = webDriver
-				.findElement(By.cssSelector("body > div.modal.fade.in > div > div > div.modal-footer > button "));
-
+		WebElement acceptChange2 = webDriver.findElement(By.cssSelector("body .modal.fade.in .modal-footer button"));
 		acceptChange2.click();
 		Temp.tryCatch(5000);
 		System.out.println("==Test CFG-202 passed==");
+
 	}
 
 //=======================================================================================================================
 	// cabin view in configuration screen
-	public void CFG203() {
-		// these 3 lines should be removed when running all steps
-		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
-		configScreen.click();
-		Temp.tryCatch(3000);
+	public void CFG203CenterCabins() {
 
-		WebElement cabinPanel = webDriver.findElement(
-				By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[1]"));
-		WebElement cabinName = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[1]/div/div[2]"));
-		WebElement microphoneName = webDriver.findElement(By.xpath(
-				"//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[1]/div/div[3]/div[1]/p[1]/span[2] "));
-		WebElement output = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[1]/div/div[3]/div[1]/p[2]/span[2]"));
-		WebElement monitor = webDriver.findElement(By.xpath(
-				"//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[1]/div/div[3]/div[2]/p[1]/span[2]	"));
-		WebElement talkBack = webDriver.findElement(By.xpath(
-				"//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[1]/div/div[3]/div[2]/p[2] "));
-		WebElement talkForward = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[1]/div/div[3]/div[2]/p[3] "));
+		WebElement configScreen = webDriver.findElement(By.cssSelector("#user-details .center-info"));
+		configScreen.click();
+		Temp.tryCatch(1000);
+
+		WebElement cabinPanel = webDriver.findElement(By.cssSelector(
+				"#audyx-main  .view-animate .col-lg-8 :nth-child(2) .cabins-container :nth-child(1) .panel.ad-cabine-panel"));
+		WebElement cabinName = webDriver.findElement(By.cssSelector(
+				"#audyx-main  .view-animate .col-lg-8 :nth-child(2) .cabins-container :nth-child(1) .panel.ad-cabine-panel .panel-heading .cabin-title"));
+		WebElement microphoneName = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(2) :nth-child(1) :nth-child(1) .ad-cabine-panel .field-configuration :nth-child(2) :nth-child(2).cabine-prop-text"));
+		WebElement output = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(2) :nth-child(1) :nth-child(1) .ad-cabine-panel .transducers-mapping :nth-child(1) :nth-child(2).cabine-prop-text"));
+		WebElement monitor = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(2) :nth-child(1) :nth-child(1) .ad-cabine-panel .transducers-mapping :nth-child(1) :nth-child(2).cabine-prop-text"));
+		WebElement talkBack = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(2) :nth-child(1) :nth-child(1) .ad-cabine-panel .transducers-mapping :nth-child(2) :nth-child(2).cabine-prop-text"));
+		WebElement talkForward = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(2) :nth-child(1) :nth-child(1) .ad-cabine-panel .transducers-mapping :nth-child(3) :nth-child(2).cabine-prop-text"));
 		System.out.println("Test CFG-203 step 1 passed");
 //edit cabin name
 		/*
@@ -275,16 +251,16 @@ public class Configuration {
 		 * "Test CFG-203 step 2");
 		 */
 // click on delete cabin icon
-		WebElement deleteCabin = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[2]/div/div[2]/div/i[2]"));
+		WebElement deleteCabin = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(1) :nth-child(1) :nth-child(1) .panel-heading i.fa.fa-trash.clickable"));
 		deleteCabin.click();
 		Temp.tryCatch(4000);
-		WebElement confirmDelete = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[2]/div/div[1]"));
+		WebElement confirmDelete = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(1) :nth-child(1) .panel.ad-cabine-panel .panel-confirm"));
 		System.out.println("Test CFG-203 step 3 passed");
 
-		WebElement cancelDelete = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div[2]/div/div[1]/a  "));
+		WebElement cancelDelete = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 :nth-child(1) :nth-child(1) .panel.ad-cabine-panel .panel-confirm a"));
 		cancelDelete.click();
 		Temp.tryCatch(4000);
 		System.out.println("Test CFG-203 step 4 passed");
@@ -293,171 +269,192 @@ public class Configuration {
 
 //=======================================================================================================================
 	// User details - in left side of configuration screen
-	public void CFG301() {
+	public void CFG301UserDetails() {
 		// check you are in configuration screen
-		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
-		Temp.configScreen(configScreen, "Test CFG-301 step 1");
+		WebElement configurationScreen = webDriver.findElement(By.cssSelector("#user-details .center-info"));
+		Temp.configScreen(configurationScreen, "Test CFG-301 step 1");
 		// view all user details
-		WebElement userName1 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[1]/h3"));
-		String userName11 = userName1.getAttribute("innerHTML");
-		WebElement emailUser = webDriver.findElement(By.xpath(
-				"//*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[2]/div/div[2]/p[1]"));
-		WebElement portalUser = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[2]/div/div[2]/p[4]"));
+		WebElement userName1 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate  .col-lg-4 .panel.user-panel .panel-heading h3"));
+		String userName11 = Temp.splitStringWithSpecialChar(userName1, "<");
+		System.out.println(userName11);
+		WebElement emailUser = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-4 .panel.user-panel .panel-body .col-xs-3.col-lg-8 .user-email :nth-child(2)"));
+		WebElement portalUser = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-4 .panel.user-panel .panel-body .col-xs-3.col-lg-8 :nth-child(4) a"));
 		System.out.println("Test CFG-301 step 2 passed");
-// edit user details and cancel
-		WebElement userName2 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[1]/h3"));
-		String userName22 = userName2.getAttribute("innerHTML");
-		WebElement editButton = webDriver.findElement(By.cssSelector(
-				" #audyx-main > div > div > div > div.body > section > div.view-animate > div > div.col-lg-4 > div.panel.user-panel > div > ng-include > div > span > i.fa.fa-pencil"));
+
+		WebElement editButton = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-4 .panel.user-panel span i.fa.fa-pencil"));
 		editButton.click();
 		Temp.tryCatch(3000);
-		WebElement editUserName = webDriver.findElement(By.cssSelector(" #lastname"));
+		WebElement editUserName = webDriver.findElement(By.cssSelector("#lastname"));
 		editUserName.sendKeys("No name");
 
 		Temp.tryCatch(1000);
-		WebElement cancelEdit = webDriver.findElement(By.cssSelector(
-				"#audyx-main > div > div > div > div.body > section > div.view-animate > div > div.col-lg-4 > div.panel.user-panel > div > ng-include > div > div.panel-body > div > form > div.row > div > div > a"));
+		WebElement cancelEdit = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-4 .panel.user-panel .panel-body .row a"));
 		cancelEdit.click();
 		Temp.tryCatch(5000);
-		WebElement userName3 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[1]/h3"));
-		String userName33 = userName3.getAttribute("innerHTML");
-		Temp.checkEqualString(userName22, userName33, "Test CFG-301 step 3");
+		WebElement userName3 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate  .col-lg-4 .panel.user-panel .panel-heading h3"));
+		String userName33 = Temp.splitStringWithSpecialChar(userName3, "<");
+		System.out.println(userName33);
+		Temp.checkEqualString(userName11, userName33, "Test CFG-301 step 3");
 
 // edit user details and accept
-		WebElement userName4 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[1]/h3"));
-		String userName44 = userName4.getAttribute("innerHTML");
-		WebElement editButton1 = webDriver.findElement(By.cssSelector(
-				" #audyx-main > div > div > div > div.body > section > div.view-animate > div > div.col-lg-4 > div.panel.user-panel > div > ng-include > div > span > i.fa.fa-pencil"));
+		WebElement userName4 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate  .col-lg-4 .panel.user-panel .panel-heading h3"));
+		String userName44 = Temp.splitStringWithSpecialChar(userName4, "<");
+		System.out.println(userName44);
+		WebElement editButton1 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-4 .panel.user-panel span i.fa.fa-pencil"));
 		editButton1.click();
 		Temp.tryCatch(3000);
-		WebElement editUserName2 = webDriver.findElement(By.cssSelector(" #lastname"));
+		WebElement editUserName2 = webDriver.findElement(By.cssSelector("#lastname"));
 		editUserName2.clear();
 		Temp.tryCatch(1000);
 		editUserName2.sendKeys("Test " + RandomStringUtils.randomNumeric(2));
 
 		WebElement saveEdit = webDriver.findElement(By.cssSelector(
-				" #audyx-main > div > div > div > div.body > section > div.view-animate > div > div.col-lg-4 > div.panel.user-panel > div > ng-include > div > div.panel-body > div > form > div.row > div > div > button"));
+				"#audyx-main .view-animate .col-lg-4 .panel.user-panel .panel-body .row .ad-button-group.clickable .btn-primary"));
 		saveEdit.click();
 		Temp.tryCatch(5000);
-		WebElement userName5 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[1]/div/ng-include/div/div[1]/h3"));
+		WebElement userName5 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate  .col-lg-4 .panel.user-panel .panel-heading h3"));
 		String userName55 = userName5.getAttribute("innerHTML");
-		Temp.checkEqualString(userName44, userName55, "Test CFG-301 step 4");
-		System.out.println("==Test CFG-301 passed==");
+		Temp.checkDiffString(userName44, userName55, "Test CFG-301 step 4");
+		System.out.println("==Test CFG-301 finished==");
 	}
 
 //=======================================================================================================================
-	public void CFG302() {
+	public void CFG302InviteUser() {
 		// check you are in configuration screen, then click add user
-		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
-		configScreen.click();
+		WebElement configurationScreen = webDriver.findElement(By.cssSelector("#user-details .center-info"));
+		configurationScreen.click();
 		Temp.tryCatch(1000);
-		WebElement addUserButton = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/button[1]"));
+		WebElement addUserButton = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons button:nth-child(1)"));
 		addUserButton.click();
 		System.out.println("Test CFG-302 step 1 passed");
 		Temp.tryCatch(3000);
-// view add user panel
-		WebElement email = webDriver.findElement(By.id("email"));
-		WebElement userRole = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[1]/div[2]"));
-		WebElement language = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[1]/div[3]"));
-		WebElement cancel = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/a"));
-		WebElement submit = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/button"));
+//view add user panel
+		WebElement email = webDriver.findElement(By.cssSelector("#email"));
+		WebElement userRole = webDriver.findElement(By.cssSelector("#audyx-main .select2-chosen .label-Collaborator"));
+		WebElement language = webDriver.findElement(By.cssSelector("#audyx-main .select2-chosen .label-locale"));
+
+		WebElement cancel = webDriver
+				.findElement(By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .ad-button-group a"));
+		WebElement submit = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .ad-button-group .btn-primary"));
 		System.out.println("Test CFG-302 step 2 passed");
-		// enter email address but press cancel
+//enter email address but press cancel
 		email.sendKeys("esty@audyx.com");
 		cancel.click();
 		Temp.tryCatch(3000);
 		System.out.println("Test CFG-302 step 3 passed");
 //try to add user with empty name field -add button in not clickable
-		WebElement addUserButton2 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/button[1]"));
+		WebElement addUserButton2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons button:nth-child(1)"));
 		addUserButton2.click();
 		Temp.tryCatch(5000);
-		WebElement submit2 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/button"));
+		WebElement submit2 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .ad-button-group .btn-primary"));
 		Temp.checkButtonNotClickable(submit2, "Test CFG-302 step 4");
 //enter invalid email address - check if error message appears
-		WebElement email2 = webDriver.findElement(By.xpath(" //*[@id=\"email\"]"));
+		WebElement email2 = webDriver.findElement(By.cssSelector("#email"));
 		email2.sendKeys("a");
-		WebElement invalidMessage = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[1]/div[1]/div/span/div[2] "));
+		WebElement invalidMessage = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .row .col-lg-4 .help-block"));
 		System.out.println("Test CFG-302 step 5 passed");
 //add new user and submit, check if authentication modal appears
-		WebElement addUserButton3 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/button[1]"));
+		WebElement addUserButton3 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons button:nth-child(1)"));
 		addUserButton3.click();
 		Temp.tryCatch(5000);
-		WebElement email3 = webDriver.findElement(By.xpath(" //*[@id=\"email\"]"));
+		WebElement email3 = webDriver.findElement(By.cssSelector("#email"));
 		email3.sendKeys("stw55772@gmail.com");
-		WebElement submit3 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/button"));
+		WebElement submit3 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .ad-button-group .btn-primary"));
 		submit3.click();
 		Temp.tryCatch(5000);
-		WebElement autenticateModal = webDriver.findElement(By.cssSelector(" body > div.modal.fade.in > div > div"));
+		WebElement authenticateModal = webDriver.findElement(By.cssSelector(".modal.fade.in .modal-content"));
 		System.out.println("Test CFG-302 step 6 passed");
 		// cancel authentication modal
-		WebElement cancelAutenticateModal = webDriver.findElement(By
-				.cssSelector(" body > div.modal.fade.in > div > div > form > div.modal-footer > button:nth-child(1)"));
+		WebElement cancelAutenticateModal = webDriver
+				.findElement(By.cssSelector(".modal.fade.in .modal-content :nth-child(1).btn-primary"));
 		cancelAutenticateModal.click();
 		System.out.println("Test CFG-302 step 7 passed");
 //re-enter data and confirm password
-		WebElement addUserButton4 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/button[1]"));
+		WebElement addUserButton4 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons button:nth-child(1)"));
 		addUserButton4.click();
 		Temp.tryCatch(5000);
-		WebElement email4 = webDriver.findElement(By.xpath(" //*[@id=\"email\"]"));
+		WebElement email4 = webDriver.findElement(By.cssSelector("#email"));
 		email4.sendKeys("stw55772@gmail.com");
 		// change role to administrator:
-		WebElement changeRole = webDriver.findElement(By.xpath(" //*[@id=\"s2id_autogen15\"]/a/span[1]/span"));
+		WebElement changeRole = webDriver
+				.findElement(By.cssSelector("#audyx-main .select2-chosen .label-Collaborator"));
 		changeRole.click();
 		Temp.tryCatch(3000);
-		WebElement admin = webDriver.findElement(By.xpath(" //*[@id=\"select2-drop\"]/ul/li[1]/div"));
+		WebElement admin = webDriver.findElement(By.cssSelector("#select2-drop li:nth-child(1) .select2-result-label"));
 		admin.click();
 		Temp.tryCatch(3000);
-		WebElement submit4 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/button"));
+		WebElement submit4 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .ad-button-group .btn-primary"));
 		submit4.click();
 		Temp.tryCatch(5000);
-		WebElement enterPassword = webDriver
-				.findElement(By.cssSelector("body > div.modal.fade.in > div > div > form > div.modal-body > input "));
+		WebElement enterPassword = webDriver.findElement(By.cssSelector(".modal.fade.in .modal-body .ng-pristine"));
 		enterPassword.sendKeys("123456Qw");
 		Temp.tryCatch(3000);
-		WebElement continueButton = webDriver.findElement(By
-				.cssSelector(" body > div.modal.fade.in > div > div > form > div.modal-footer > button:nth-child(2)"));
+		WebElement continueButton = webDriver.findElement(By.cssSelector(".modal.fade.in .modal-footer :nth-child(2)"));
 		continueButton.click();
 		Temp.tryCatch(3000);
 		System.out.println("Test CFG-302 step 8 passed");
 //go to configuration screen and see the new user is added
 		WebElement newUserInList = webDriver.findElement(
-				By.xpath(" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[1]/div[2]/div[2]/div"));
+				By.cssSelector("#audyx-main .view-animate .col-lg-4 :nth-child(2) :nth-child(2) .col-lg-6"));
 		System.out.println("Test CFG-302 step 9 passed");
+
 		// try to add user that already exist
-		WebElement addUserButton5 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[1]/div/div/div[2]/button[1]"));
+		WebElement addUserButton5 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons button:nth-child(1)"));
+		addUserButton.click();
 		addUserButton5.click();
 		Temp.tryCatch(5000);
-		WebElement email5 = webDriver.findElement(By.xpath(" //*[@id=\"email\"]"));
-		email5.sendKeys("esty@audyx.com");
+		WebElement email5 = webDriver.findElement(By.cssSelector("#email"));
 		Temp.tryCatch(3000);
-		WebElement submit5 = webDriver.findElement(By.xpath(
-				" //*[@id=\"audyx-main\"]/div/div/div/div[2]/section/div[2]/div/div[2]/div[2]/div/div/form/div[2]/button"));
+		WebElement submit5 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .ad-button-group .btn-primary"));
 		submit5.click();
 		Temp.tryCatch(5000);
 		System.out.println("Test CFG-302 step 12 passed");
-		WebElement existModal = webDriver.findElement(By.cssSelector(" body > div.modal.fade.in > div > div"));
+
+		WebElement addUserButton6 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate .col-lg-8 .panel.center-panel .center-admin-buttons button:nth-child(1)"));
+		addUserButton6.click();
+		Temp.tryCatch(3000);
+		WebElement email6 = webDriver.findElement(By.cssSelector("#email"));
+		email5.sendKeys("esty@audyx.com");
+		Temp.tryCatch(3000);
+		// change role to administrator:
+		WebElement changeRole2 = webDriver
+				.findElement(By.cssSelector("#audyx-main .select2-chosen .label-Collaborator"));
+		changeRole2.click();
+		Temp.tryCatch(3000);
+		WebElement admin2 = webDriver
+				.findElement(By.cssSelector("#select2-drop li:nth-child(1) .select2-result-label"));
+		admin2.click();
+		Temp.tryCatch(3000);
+		WebElement submit6 = webDriver.findElement(
+				By.cssSelector("#audyx-main .view-animate .col-lg-8 :nth-child(2) .ad-button-group .btn-primary"));
+		submit6.click();
+		Temp.tryCatch(5000);
+		WebElement warningtModal = webDriver.findElement(By.cssSelector(".modal.fade.in .modal-content"));
 		System.out.println("Test CFG-302 step 13 passed");
+
 		WebElement acceptExistModal = webDriver
-				.findElement(By.cssSelector("body > div.modal.fade.in > div > div > div.modal-footer > button"));
+				.findElement(By.cssSelector(".modal.fade.in .modal-footer .btn-primary"));
 		acceptExistModal.click();
 		Temp.tryCatch(5000);
 		Temp.checkUrl("https://alpha.audyx.com/#/configuration", webDriver.getCurrentUrl(), "Test CFG-302 step 14");
@@ -468,95 +465,64 @@ public class Configuration {
 //=======================================================================================================================
 
 	public void CFG303RemoveUser() {
-		// go to configuration screen
-		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
-		Temp.configScreen(configScreen, "Test CFG-303 step 1");
-		// click on garbage near user name
-		WebElement trashButton = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[3]/i"));
+
+		WebElement configurationScreen = webDriver.findElement(By.cssSelector("#user-details .center-info"));
+		Temp.configScreen(configurationScreen, "Test CFG-303 step 1");
+		WebElement trashButton = webDriver.findElement(By.cssSelector("#collaborator-678 .panel-body i"));
 		trashButton.click();
 		Temp.tryCatch(6000);
-		WebElement confirmTrashButton = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[1]"));
+		WebElement confirmTrashButton = webDriver.findElement(By.cssSelector("#collaborator-678 .panel-confirm"));
 		System.out.println("Test CFG-303 step 2 passed");
 
 // cancel delete user
 		WebElement cancelConfirmTrashButton = webDriver
-				.findElement(By.xpath("	//*[@id=\"collaborator-679\"]/div[1]/a"));
+				.findElement(By.cssSelector("#collaborator-678 .panel-confirm a"));
 		cancelConfirmTrashButton.click();
 		Temp.tryCatch(5000);
 		System.out.println("Test CFG-303 step 3 passed");
-///accept delete user - confirm modal appears
-		WebElement trashButton2 = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[3]/i"));
-		trashButton2.click();
-		Temp.tryCatch(5000);
-		WebElement unsubscribe = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[1]/button"));
-		unsubscribe.click();
-		Temp.tryCatch(5000);
-		WebElement confirmDeleteModal = webDriver.findElement(By.xpath(" /html/body/div[5]/div/div"));
-		System.out.println("Test CFG-303 step 4 passed");
-// cancel confirm modal of delete user
-		WebElement cancelConfirmDeleteModal = webDriver
-				.findElement(By.xpath(" /html/body/div[5]/div/div/form/div[2]/button[1]"));
-		cancelConfirmDeleteModal.click();
-		Temp.tryCatch(5000);
-		System.out.println("Test CFG-303 step 5 passed");
-// click on delete icon again, then enter incorrect password
-		WebElement trashButton3 = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[3]/i"));
-		trashButton3.click();
-		Temp.tryCatch(5000);
-		WebElement unsubscribe2 = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-679\"]/div[1]/button"));
-		unsubscribe2.click();
-		Temp.tryCatch(5000);
-		// WebElement confirmDeleteModal = webDriver.findElement(By.xpath("
-		// /html/body/div[6]/div/div"));
-		WebElement pwArea = webDriver.findElement(By.xpath(" /html/body/div[5]/div/div/form/div[1]/input"));
-		pwArea.sendKeys("aa");
-		pwArea.click();
-		Temp.tryCatch(5000);
-		WebElement continueButton = webDriver.findElement(By.xpath("/html/body/div[5]/div/div/form/div[2]/button[2]"));
-		continueButton.click();
-		Temp.tryCatch(5000);
-		WebElement confirmDeleteModal2 = webDriver.findElement(By.xpath(" /html/body/div[5]/div/div"));
-		System.out.println("Test CFG-303 step 6 passed");
 
 	}
 
-	public void CFG304() {
-		// see all user details in list
-		WebElement configScreen = webDriver.findElement(By.xpath("//*[@id=\"user-details\"]/span/div/span[2]"));
-		Temp.configScreen(configScreen, "Test CFG-304 step 1");
-		WebElement userName = webDriver.findElement(By.xpath(" //*[@id=\"collaborator-629\"]/div[2]/span"));
+	public void CFG304UserRole() {
+		// see all user details in users panel
+		WebElement configurationScreen = webDriver.findElement(By.cssSelector("#user-details .center-info"));
+		Temp.configScreen(configurationScreen, "Test CFG-304 step 1");
+		WebElement userName = webDriver
+				.findElement(By.cssSelector("#collaborator-678 .panel-heading.ellipsis .text-primary"));
 		WebElement userPicture = webDriver
-				.findElement(By.xpath(" //*[@id=\"collaborator-629\"]/div[3]/div[1]/div/div"));
-		WebElement userRole = webDriver.findElement(By.xpath(" //*[@id=\"s2id_autogen1\"]/a/span[1]/span"));
-		WebElement userInvitation = webDriver.findElement(By.xpath(" //*[@id=\"invitation-376\"]/div[3]/div[1]/div"));
+				.findElement(By.cssSelector("#collaborator-678 .panel-body :nth-child(2) .user-image"));
+		WebElement userRole = webDriver.findElement(By.cssSelector("#audyx-main .select2-chosen"));
 		System.out.println("Test CFG-304 step 2 passed");
 
 		// change user role
-		WebElement oldRole = webDriver.findElement(By.xpath("//*[@id=\"s2id_autogen1\"]/a/span[1]/span"));
-		String currentRole = oldRole.getAttribute("inneHTML");
+		WebElement oldRole = webDriver.findElement(By.cssSelector("#audyx-main .select2-chosen"));
+		String currentRole = oldRole.getText();
 		System.out.println(currentRole);
 		oldRole.click();
 		Temp.tryCatch(3000);
-		WebElement chooseAnotherRole = webDriver.findElement(By.xpath(" //*[@id=\"select2-drop\"]/ul/li[2]/div"));
+		WebElement chooseAnotherRole = webDriver
+				.findElement(By.cssSelector("#select2-drop :nth-child(2).select2-results-dept-0"));
 		chooseAnotherRole.click();
 		Temp.tryCatch(3000);
-		WebElement pwArea = webDriver.findElement(By.xpath(" /html/body/div[7]/div/div/form/div[1]/input"));
+		WebElement pwArea = webDriver.findElement(By.cssSelector("body .modal.fade.in .modal-body .ng-pristine"));
 		pwArea.sendKeys("123456Qw");
 		Temp.tryCatch(5000);
-		WebElement continueButton = webDriver.findElement(By.xpath(" /html/body/div[7]/div/div/form/div[2]/button[2]"));
+		WebElement continueButton = webDriver
+				.findElement(By.cssSelector("body .modal.fade.in .modal-footer :nth-child(2)"));
 		continueButton.click();
 		Temp.tryCatch(5000);
 		System.out.println("Test CFG-304 step 3 passed");
 
 		// change again the role
-		WebElement userRole2 = webDriver.findElement(By.xpath(" //*[@id=\"s2id_autogen1\"]"));
+		WebElement userRole2 = webDriver.findElement(By.cssSelector("#audyx-main .select2-chosen"));
+		String newRole = userRole2.getText();
+		System.out.println(newRole);
 		userRole2.click();
 		Temp.tryCatch(3000);
-		WebElement chooseNewRole = webDriver.findElement(By.xpath("//*[@id=\"select2-drop\"]/ul/li[1]/div"));
+		WebElement chooseNewRole = webDriver.findElement(By.cssSelector("#select2-drop ul li:nth-child(1)"));
 		chooseNewRole.click();
 		Temp.tryCatch(5000);
-		String newRole = userRole2.getAttribute("inneHTML");
-		System.out.println(newRole);
-		System.out.println("Test CFG-304 step 4");
+		Temp.checkDiffString(newRole, currentRole, "Test CFG-304 step 4");
+		// System.out.println("Test CFG-304 step 4");
 	}
 }
