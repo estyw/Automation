@@ -209,6 +209,7 @@ public class Configuration {
 
 		WebElement changeCenter3 = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate .col-lg-4 .panel.user-panel ng-include .panel-body .col-xs-6.col-lg-12 table tbody :nth-child(1) :nth-child(3) button"));
+		changeCenter3.click();
 		Temp.tryCatch(4000);
 		WebElement acceptChange2 = webDriver.findElement(By.cssSelector("body .modal.fade.in .modal-footer button"));
 		acceptChange2.click();
@@ -482,6 +483,7 @@ public class Configuration {
 		System.out.println("Test CFG-303 step 3 passed");
 
 	}
+	// =======================================================================================================================
 
 	public void CFG304UserRole() {
 		// see all user details in users panel
@@ -523,6 +525,13 @@ public class Configuration {
 		chooseNewRole.click();
 		Temp.tryCatch(5000);
 		Temp.checkDiffString(newRole, currentRole, "Test CFG-304 step 4");
-		// System.out.println("Test CFG-304 step 4");
+		// return back to first role - for the next tests
+		WebElement backToOldRole = webDriver.findElement(By.cssSelector("#audyx-main .select2-chosen"));
+		backToOldRole.click();
+		Temp.tryCatch(3000);
+		WebElement chooseNewRole2 = webDriver.findElement(By.cssSelector("#select2-drop ul li:nth-child(1)"));
+		chooseNewRole2.click();
+		Temp.tryCatch(5000);
+
 	}
 }
