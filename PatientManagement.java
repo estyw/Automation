@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -56,7 +57,7 @@ public class PatientManagement {
 		patientListIcon.click();
 		Temp.tryCatch(3000);
 		// hover back to main screen
-		WebElement mainPanel = webDriver.findElement(By.cssSelector("audyx-main"));
+		WebElement mainPanel = webDriver.findElement(By.id("audyx-main"));
 		Actions act = new Actions(webDriver);
 		act.moveToElement(mainPanel).perform();
 		Temp.tryCatch(5000);
@@ -97,7 +98,7 @@ public class PatientManagement {
 
 		// go to page 2
 		WebElement page2 = webDriver
-				.findElement(By.xpath(" //*[@id=\"patient-list-body\"]/div/div/div[2]/div[1]/ul/li[2]/a"));
+				.findElement(By.cssSelector("#patient-list-body .row.patients-pagination .col-lg-10 :nth-child(2) a"));
 		page2.click();
 		Temp.tryCatch(3000);
 		System.out.println("Test PAT-101 step 6 passed");
@@ -126,7 +127,7 @@ public class PatientManagement {
 		selectCurrentPatient.click();
 		Temp.tryCatch(3000);
 		WebElement CurrentPatientInList = webDriver
-				.findElement(By.cssSelector(" patient-list-body .table tr:nth-child(2) td.patient-fullname"));
+				.findElement(By.cssSelector("#patient-list-body .patient-entry.warning .patient-fullname"));
 		String CurrentPatientInList1 = CurrentPatientInList.getText();
 		Temp.tryCatch(3000);
 		WebElement CurrentPatientInNav = webDriver
@@ -146,8 +147,8 @@ public class PatientManagement {
 		searchPatient.clear();
 		Temp.tryCatch(2000);
 		searchPatient.sendKeys("s");
-		WebElement firstLine2 = webDriver
-				.findElement(By.cssSelector("#patient-list-body .table  tr.patient-entry.warning"));
+		WebElement firstLine2 = webDriver.findElement(
+				By.cssSelector("#patient-list-body :nth-child(1).patient-entry  :nth-child(1).patient-fullname"));
 		Temp.checkContainString(firstLine2.getText(), "s", "Test PAT-102 step 2");
 		searchPatient.clear();
 	}
@@ -162,12 +163,12 @@ public class PatientManagement {
 
 		// view the patient
 		WebElement firstLineHover = webDriver
-				.findElement(By.cssSelector("#patient-list-body .table tr.patient-entry.warning td:nth-child(5)"));
+				.findElement(By.cssSelector("#patient-list-body :nth-child(1).patient-entry"));
 		Actions act = new Actions(webDriver);
 		act.moveToElement(firstLineHover).build().perform();
 		Temp.tryCatch(3000);
-		WebElement searchPreview = webDriver
-				.findElement(By.cssSelector("#patient-list-body .table tr.patient-entry.warning td:nth-child(6)"));
+		WebElement searchPreview = webDriver.findElement(By
+				.cssSelector("#patient-list-body :nth-child(1).patient-entry .patient-overview-icon .fa-search-plus"));
 		searchPreview.click();
 		Temp.tryCatch(6000);
 		WebElement noTestPreview = webDriver.findElement(By.className("no-tests-box"));
@@ -178,12 +179,12 @@ public class PatientManagement {
 		searchPatient.sendKeys("Release3");
 		// choose the patient details
 		WebElement firstLineHover2 = webDriver
-				.findElement(By.cssSelector("#patient-list-body .table tr.patient-entry.warning td:nth-child(5)"));
+				.findElement(By.cssSelector("#patient-list-body :nth-child(1).patient-entry"));
 		Actions act2 = new Actions(webDriver);
 		act.moveToElement(firstLineHover2).build().perform();
 		Temp.tryCatch(3000);
-		WebElement searchPreview2 = webDriver
-				.findElement(By.cssSelector(" #patient-list-body .table tr.patient-entry.warning td:nth-child(6)"));
+		WebElement searchPreview2 = webDriver.findElement(By
+				.cssSelector("#patient-list-body :nth-child(1).patient-entry .patient-overview-icon .fa-search-plus"));
 		searchPreview2.click();
 		Temp.tryCatch(3000);
 		WebElement tonalPreview = webDriver
@@ -212,7 +213,7 @@ public class PatientManagement {
 		Actions act5 = new Actions(webDriver);
 		act5.moveToElement(sinGraphPreview).click().perform();
 		Temp.tryCatch(6000);
-		Temp.checkContainString(webDriver.getCurrentUrl(), "https://alpha.audyx.com/#/patientFolder/test/speech",
+		Temp.checkContainString(webDriver.getCurrentUrl(), "https://alpha.audyx.com/#/patientFolder/test/speechnoise/*",
 				"Test PAT-201 step 6");
 	}
 
@@ -255,11 +256,13 @@ public class PatientManagement {
 		Temp.printElementColor(calendarColor, "#a94442", "Test PAT-301 step 5");
 
 		// fill in birthdate - greater than 2030
-		WebElement birthdate2 = webDriver.findElement(By.cssSelector(
-				"#create-patient-panel .panel-body .row .col-lg-5 .form-group .input-group .patient-birthdate"));
-		birthdate2.clear();
+		firstName.clear();
+		firstName.sendKeys("Test");
+		Temp.tryCatch(3000);
+		lastName.clear();
+		lastName.sendKeys("Patient");
 		Temp.tryCatch(2000);
-		birthdate2.sendKeys("06062030");
+		birthdate.sendKeys("06062030");
 		Temp.tryCatch(2000);
 		// check if calendar icon becomes red
 		WebElement calendarColor2 = webDriver.findElement(By.cssSelector(
@@ -267,16 +270,18 @@ public class PatientManagement {
 		Temp.printElementColor(calendarColor, "#f2dede", "Test PAT-301 step 6");
 
 		// Fill in the correct birthdate and check if the add button is enabled
-		WebElement birthdate3 = webDriver.findElement(By.cssSelector(
-				"#create-patient-panel .panel-body .row .col-lg-5 .form-group .input-group .patient-birthdate"));
-		birthdate3.clear();
+		firstName.clear();
+		firstName.sendKeys("Test");
+		Temp.tryCatch(3000);
+		lastName.clear();
+		lastName.sendKeys("Patient");
 		Temp.tryCatch(2000);
-		birthdate3.sendKeys("06062014");
+		birthdate.sendKeys("06062014");
 		Temp.tryCatch(4000);
 		Temp.checkButtonClickable(submitNewPatient, "Test PAT-301 step 7");
 
 		// click on cancel
-		WebElement cancelNewPatient = webDriver.findElement(By.className(" cancel-patient-form"));
+		WebElement cancelNewPatient = webDriver.findElement(By.className("cancel-patient-form"));
 		cancelNewPatient.click();
 		Temp.tryCatch(3000);
 		Temp.checkUrl("https://alpha.audyx.com/#/patients", webDriver.getCurrentUrl(), "Test PAT-301 step 8");
@@ -324,7 +329,7 @@ public class PatientManagement {
 
 		// click submit new patient
 		submitNewPatient3.click();
-		Temp.tryCatch(5000);
+		Temp.tryCatch(7000);
 		// check the new patient added by present it in nav bar
 		WebElement CurrentPatientInNav = webDriver
 				.findElement(By.cssSelector("#audyx-main .menu-bar .patient .info-text .ad-name"));
@@ -343,7 +348,7 @@ public class PatientManagement {
 		String currentCenter11 = Temp.printElementText(currentCenter1);
 
 		WebElement currentPatientAge1 = webDriver.findElement(By.cssSelector(
-				"#audyx-main > div > div > div > div.menu-bar > div.patient > div.info-text > div:nth-child(2) > span.ad-name > span > span"));
+				"#audyx-main .menu-bar .patient .info-text :nth-child(2) .ad-name :nth-child(1) :nth-child(1)"));
 		String currentPatientAge11 = currentPatientAge1.getText();
 		System.out.println(currentPatientAge11);
 		WebElement searchIcon = webDriver.findElement(By.cssSelector("#patient-autocomplete-toggle"));
@@ -357,6 +362,9 @@ public class PatientManagement {
 
 		WebElement searchInOtherCenter = webDriver
 				.findElement(By.cssSelector("#patient-list-body .advanced-search .text .autocmplete-link"));
+		Actions act = new Actions(webDriver);
+		act.moveToElement(searchInOtherCenter).perform();
+		Temp.tryCatch(5000);
 		searchInOtherCenter.click();
 		Temp.tryCatch(5000);
 		WebElement searchArea2 = webDriver.findElement(By.className("search-patient-input"));
@@ -376,13 +384,13 @@ public class PatientManagement {
 		searchAnotherCenter.click();
 		Temp.tryCatch(3000);
 		WebElement listResults = webDriver.findElement(By.cssSelector(
-				"#autocomplete .search-patient-holder .search-patient-dropdown .search-patient-row.clickable.result .fullname"));
+				"#autocomplete .search-patient-holder .search-patient-dropdown :nth-child(2) :nth-child(2) :nth-child(1):nth-child(1).search-patient-row.clickable.result :nth-child(1).fullname"));
 		System.out.println("Test PAT-401 step 4 passed");
 
 		listResults.click();
 		Temp.tryCatch(3000);
 		WebElement otherCenterModal = webDriver
-				.findElement(By.cssSelector("body  .modal.fade.in .modal-dialog .modal-content"));
+				.findElement(By.cssSelector("body .modal.fade.in .modal-dialog .modal-content"));
 		System.out.println("Test PAT-401 step 5 passed");
 
 		// switch to patient center
@@ -410,7 +418,7 @@ public class PatientManagement {
 		searchAnotherCenter2.click();
 		Temp.tryCatch(3000);
 		WebElement listResults2 = webDriver.findElement(By.cssSelector(
-				"#autocomplete .search-patient-holder .search-patient-dropdown .search-patient-row.clickable.result .fullname"));
+				"#autocomplete .search-patient-holder .search-patient-dropdown :nth-child(2) :nth-child(2) :nth-child(1):nth-child(1).search-patient-row.clickable.result :nth-child(1).fullname"));
 		listResults2.click();
 		Temp.tryCatch(3000);
 
@@ -419,8 +427,8 @@ public class PatientManagement {
 				.findElement(By.cssSelector("body .modal.fade.in .modal-footer .buttons .btn-primary:nth-child(2)"));
 		movePatient.click();
 		Temp.tryCatch(4000);
-		WebElement currentPatientAge2 = webDriver.findElement(
-				By.xpath("//*[@id=\"audyx-main\"]/div/div/div/div[1]/div[3]/div[2]/div[2]/span[1]/span/span"));
+		WebElement currentPatientAge2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .menu-bar .patient .info-text :nth-child(2) .ad-name :nth-child(1) :nth-child(1)"));
 		String currentPatientAge22 = currentPatientAge2.getText();
 		System.out.println(currentPatientAge22);
 		Temp.checkDiffString(currentPatientAge11, currentPatientAge22, "Test PAT-401 step 7");
@@ -507,7 +515,7 @@ public class PatientManagement {
 
 		// Decrease the view
 		WebElement decreaseView = webDriver.findElement(By.cssSelector(
-				"#test-type-4 .panel .panel-body.mini-patient-folder .row .col-lg-12 .container-icon-expand .full"));
+				"#patient-info .panel-body .row.primary-row.patient-info-header .container-icon-expand button"));
 		decreaseView.click();
 		Temp.tryCatch(5000);
 		System.out.println("Test PAT-601 step 4 passed");
@@ -524,22 +532,21 @@ public class PatientManagement {
 				"#patient-info .panel-body .row.primary-row.patient-info-header .fa.fa-pencil.on-hover.clickable"));
 		Actions act = new Actions(webDriver);
 		act.moveToElement(editIcon).click().perform();
-		Temp.tryCatch(5000);
+		Temp.tryCatch(2000);
 		System.out.println("Test PAT-602 step 1 passed");
 
 		// View the elements that can be edited
-		WebElement firstName = webDriver
-				.findElement(By.xpath(" //*[@id=\"patient-info\"]/div/div/div/div[3]/div[2]/div[1]/div[1]/div/input"));
-				//#patient-info .panel-body .edit-patient.question-group :nth-child(1) :nth-child(1) input.form-control:nth-child(1)
-		WebElement lastName = webDriver
-				.findElement(By.xpath(" //*[@id=\"patient-info\"]/div/div/div/div[3]/div[2]/div[1]/div[2]/div/input"));
-		WebElement birthDate = webDriver
-				.findElement(By.xpath(" //*[@id=\"patient-info\"]/div/div/div/div[3]/div[2]/div[2]/div/div/div/input"));
+		WebElement firstName = webDriver.findElement(By.cssSelector(
+				"#patient-info .panel-body .edit-patient.question-group :nth-child(1) :nth-child(1) input.form-control:nth-child(1)"));
+		WebElement lastName = webDriver.findElement(By.cssSelector(
+				"#patient-info .edit-patient.question-group :nth-child(1) .col-xs-6.right-column input:nth-child(1)"));
+		WebElement birthDate = webDriver.findElement(
+				By.cssSelector("#patient-info .panel-body .edit-patient.question-group > :nth-child(2) input"));
 		WebElement additionalInfo = webDriver
-				.findElement(By.xpath(" //*[@id=\"patient-info\"]/div/div/div/div[3]/div[2]/div[3]/div[1]/span/h5"));
+				.findElement(By.cssSelector("#patient-info .edit-patient.question-group :nth-child(3) .sub-header h5"));
 		System.out.println("Test PAT-602 step 2 passed");
 
-		// Delete mandatory field - save button isn't enabled
+		// all mandatory fields are filled - save button is enabled
 		WebElement submit = webDriver.findElement(
 				By.cssSelector("#patient-info .panel-body .edit-patient.question-group .ad-button-group .btn-primary"));
 		Temp.checkButtonClickable(submit, "Test PAT-602 step 3");
@@ -551,7 +558,7 @@ public class PatientManagement {
 
 		// Click cancel - patient name wasn't changed
 		WebElement cancel = webDriver
-				.findElement(By.xpath(" //*[@id=\"patient-info\"]/div/div/div/div[3]/div[2]/div[6]/div/div/a"));
+				.findElement(By.cssSelector("#patient-info .edit-patient.question-group :nth-child(6) a"));
 		cancel.click();
 		Temp.tryCatch(5000);
 		// See the patient name in folder
@@ -569,8 +576,8 @@ public class PatientManagement {
 		act2.moveToElement(editIcon2).click().perform();
 		Temp.tryCatch(5000);
 		// Edit first name
-		WebElement firstName2 = webDriver
-				.findElement(By.xpath(" //*[@id=\"patient-info\"]/div/div/div/div[3]/div[2]/div[1]/div[1]/div/input"));
+		WebElement firstName2 = webDriver.findElement(By.cssSelector(
+				"#patient-info .panel-body .edit-patient.question-group :nth-child(1) :nth-child(1) input.form-control:nth-child(1)"));
 		WebElement submit2 = webDriver.findElement(
 				By.cssSelector("#patient-info .panel-body .edit-patient.question-group .ad-button-group .btn-primary"));
 		Temp.editDetails(firstName2, "Test-" + RandomStringUtils.randomNumeric(2), submit2);
@@ -605,7 +612,7 @@ public class PatientManagement {
 		System.out.println("Test PAT-602 step 9 passed");
 
 		// Click on cancel
-		WebElement cancelDelete = webDriver.findElement(By.xpath(" //*[@id=\"patient-info\"]/div/div/div/div[2]/a"));
+		WebElement cancelDelete = webDriver.findElement(By.cssSelector("#patient-info .panel-confirm a"));
 		cancelDelete.click();
 		Temp.tryCatch(3000);
 		System.out.println("Test PAT-602 step 10 passed");
@@ -624,27 +631,29 @@ public class PatientManagement {
 		WebElement searchPatient = webDriver.findElement(By.className("search-patient"));
 		searchPatient.sendKeys("Release3");
 		WebElement patientRelease3 = webDriver
-				.findElement(By.cssSelector("#patient-list-body .table .patient-fullname"));
+				.findElement(By.cssSelector("#patient-list-body .table .patient-fullname a"));
 		patientRelease3.click();
 		Temp.tryCatch(5000);
 		Temp.checkContainString(webDriver.getCurrentUrl(), "https://alpha.audyx.com/#/patientFolder",
 				"Test PAT-604 step 1");
 
 		// Click on navigation icon
-		WebElement navigationIcon = webDriver.findElement(By.cssSelector("#bookmarks .bookmarks-bottom-panel"));
+		WebElement navigationIcon = webDriver
+				.findElement(By.cssSelector("#bookmarks .bookmarks-bottom-panel .main-button"));
 		Actions act = new Actions(webDriver);
-		act.moveToElement(navigationIcon).clickAndHold().perform();
+		act.moveToElement(navigationIcon).perform();
 		// Find all bookmarks
-		WebElement tonal = webDriver
-				.findElement(By.cssSelector("#bookmarks .bookmarks-wrapper .bookmarks-list .bookmark.tonal"));
 		WebElement speech = webDriver
 				.findElement(By.cssSelector("#bookmarks .bookmarks-wrapper .bookmarks-list .bookmark.noise"));
+		// ((JavascriptExecutor) webDriver).executeScript("scroll(0,300)");
+		WebElement tonal = webDriver
+				.findElement(By.cssSelector("#bookmarks .bookmarks-wrapper .bookmarks-list .bookmark.tonal"));
 		WebElement patientFolder = webDriver
-				.findElement(By.cssSelector("#bookmarks .bookmarks-wrapper .bookmarks-list .bookmark patient-info"));
+				.findElement(By.cssSelector("#bookmarks .bookmarks-wrapper .bookmarks-list .bookmark.patient-info"));
 		WebElement annamnesis = webDriver.findElement(
 				By.cssSelector("#bookmarks .bookmarks-bottom-panel .questionnaire-list .add-questionnaire.anamnesis"));
-		WebElement fittings = webDriver.findElement(By
-				.cssSelector("##bookmarks .bookmarks-bottom-panel .questionnaire-list .add-questionnaire.adaptation"));
+		WebElement fittings = webDriver.findElement(
+				By.cssSelector("#bookmarks .bookmarks-bottom-panel .questionnaire-list .add-questionnaire.adaptation"));
 		System.out.println("Test PAT-604 step 2 passed");
 	}
 
@@ -660,18 +669,17 @@ public class PatientManagement {
 				"Test PAT-701 step 1");
 
 		// Click on pencil in order to edit patient and see if HA panel appears
-		Temp.tryCatch(9000);
+		Temp.tryCatch(5000);
 		WebElement editIcon = webDriver.findElement(By.cssSelector(
 				"#patient-info .panel-body .row.primary-row.patient-info-header .fa.fa-pencil.on-hover.clickable"));
 		editIcon.click();
 		Temp.tryCatch(3000);
-		WebElement HearingAids = webDriver
-				.findElement(By.cssSelector("#patient-info .panel-body .edit-patient.question-group .sub-header "));
+		WebElement HearingAids = webDriver.findElement(
+				By.cssSelector("#patient-info .panel-body .edit-patient.question-group :nth-child(4) .sub-header h5"));
 		System.out.println("Test PAT-701 step 2 passed");
 
 		// Click on HA icon on order to edit it -see if edit area appears
 		HearingAids.click();
-		// HearingAids.click();
 		Temp.tryCatch(4000);
 		WebElement rightEar = webDriver.findElement(By.cssSelector(
 				"#patient-info .panel-body .edit-patient.question-group .sub-group .form-group.right_hearing_instrument-form .form-control"));
@@ -754,7 +762,7 @@ public class PatientManagement {
 		WebElement searchPatient = webDriver.findElement(By.className("search-patient"));
 		searchPatient.sendKeys("Release3");
 		WebElement patientRelease3 = webDriver
-				.findElement(By.cssSelector("#patient-list-body .table .patient-fullname"));
+				.findElement(By.cssSelector("#patient-list-body .table .patient-fullname a"));
 		patientRelease3.click();
 		Temp.tryCatch(5000);
 		Temp.checkContainString(webDriver.getCurrentUrl(), "https://alpha.audyx.com/#/patientFolder",
@@ -784,17 +792,29 @@ public class PatientManagement {
 		String toolTipText2 = toolTipElement2.getText();
 		System.out.println(toolTipText2);
 		Temp.tryCatch(6000);
-		if ((toolTipText.equals("SLIGHT")) && (toolTipText.equals("MODERATE")))
+		if ((toolTipText.equals("SLIGHT")) && (toolTipText2.equals("MODERATE")))
 			System.out.println("Test PAT-802 step 2 passed");
 
 		// Check the DQ in patient folder near tonal graph
-		WebElement tonalRightEar = webDriver.findElement(By.cssSelector("#patient-info .hearing-loss-level.slight"));
-		WebElement tonalLeftEar = webDriver.findElement(By.cssSelector("#patient-info .hearing-loss-level.moderate"));
+		WebElement tonalRightEar = webDriver.findElement(By.cssSelector(
+				"#test-type-2 .panel :nth-child(2) .row.legends-view .legends-container :nth-child(2) .legend-scalar"));
+		WebElement tonalLeftEar = webDriver.findElement(By.cssSelector(
+				"#test-type-2 .panel :nth-child(2) .row.legends-view .legends-container .collapsed-tests-col:nth-child(1) .legend-scalar"));
+
+		Actions act = new Actions(webDriver);
+		act.moveToElement(tonalRightEar).perform();
+		Temp.tryCatch(5000);
 		if ((tonalRightEar.getText().contains("30")) && (tonalLeftEar.getText().contains("65")))
 			System.out.println("Test PAT-802 step 3 passed");
 	}
 
 	public void REP101RequestWindow() {
+
+		// click on patient in nav bar = move to patient folder
+		WebElement patientName = webDriver
+				.findElement(By.cssSelector("#audyx-main .menu-bar .patient .info-text :nth-child(2) .ad-name"));
+		patientName.click();
+		Temp.tryCatch(5000);
 		// Click on PDF icon and see the modal appears
 		WebElement pdfIcon = webDriver.findElement(By.cssSelector("#patient-info .container-icon-pdf"));
 		pdfIcon.click();
@@ -823,18 +843,19 @@ public class PatientManagement {
 		Temp.tryCatch(3000);
 		WebElement downloadPdf = webDriver.findElement(By.cssSelector("#pdf  .modal-footer .btn.btn-primary"));
 		downloadPdf.click();
-		Temp.tryCatch(3000);
+		Temp.tryCatch(9000);
 		// Verify in download folder that the PDF download
-		String downloadPath = "C:\\Users\\Esty Wolpo\\Downloads";
+		String downloadPath = "C:\\Users\\Owner\\Downloads";
 		File dir = new File(downloadPath);
 		File[] dirContents = dir.listFiles();
 		for (int i = 0; i < dirContents.length; i++) {
-			if (dirContents[i].getName().contains("Test Release")) {
+			if (dirContents[i].getName().contains("Release")) {
 				System.out.println("Test REP-101 step 4 passed");
 			}
 		}
 
 		// Click again on pdf icon. un-check tonal test then download
+		Temp.tryCatch(3000);
 		WebElement pdfIcon3 = webDriver.findElement(By.cssSelector("#patient-info .container-icon-pdf"));
 		pdfIcon3.click();
 		Temp.tryCatch(3000);
@@ -846,11 +867,14 @@ public class PatientManagement {
 		downloadPdf2.click();
 		Temp.tryCatch(3000);
 		// Verify in download folder that the PDF download
-		String downloadPath2 = "C:\\Users\\Esty Wolpo\\Downloads";
+		String downloadPath2 = "C:\\Users\\Owner\\Downloads";
 		File getLatestFile2 = Temp.getLatestFilefromDir(downloadPath2);
 		String fileName2 = getLatestFile2.getName();
 		System.out.println(fileName2);
-		Temp.checkContainString(fileName2, "Test Release (1)", "Test REP-101 step 5");
+		Temp.checkContainString(fileName2, "_2019 (1)", "Test REP-101 step 5");
+		
+		
+		
 	}
 
 	public static void createNewPatient() {
