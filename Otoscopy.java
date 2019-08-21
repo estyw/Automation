@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 
 public class Otoscopy {
 
@@ -52,28 +53,33 @@ public class Otoscopy {
 
 		WebElement sideBar2 = webDriver.findElement(By.cssSelector("#audyx-main .menu-bar .navigator"));
 		sideBar2.click();
-		Temp.tryCatch(3000);
+		Temp.tryCatch(6000);
 		WebElement otoscopyIcon = webDriver.findElement(By.cssSelector("#menu-side :nth-child(8)"));
 		otoscopyIcon.click();
 		Temp.tryCatch(3000);
-// action act...
+		WebElement mainPanel = webDriver.findElement(By.id("audyx-main"));
+		Actions act = new Actions(webDriver);
+		act.moveToElement(mainPanel).perform();
+		Temp.tryCatch(5000);
 
-		Temp.checkUrl("https://alpha.audyx.com/#/otoscope", webDriver.getCurrentUrl(), "Test OTO-101-Access step 1");
-
+		Temp.checkUrl("https://alpha.audyx.com/#/otoscope", webDriver.getCurrentUrl(), "Test OTO-101 step 1");
+		Temp.tryCatch(2000);
 		WebElement patientIcon = webDriver
 				.findElement(By.cssSelector("#audyx-main .menu-bar .patient .info-text :nth-child(2) .ad-name"));
 		patientIcon.click();
 		Temp.tryCatch(5000);
 		WebElement cameraIcon = webDriver.findElement(By.cssSelector(
 				"#patient-info .panel-body :nth-child(2) .ears-condition.row fieldset:nth-child(1) .fa-camera"));
-		System.out.println("Test OTO-101Access step 2 passed");
-		cameraIcon.click();
+		System.out.println("Test OTO-101 step 2 passed");
 
-		Temp.checkUrl("https://alpha.audyx.com/#/otoscope", webDriver.getCurrentUrl(), "Test OTO-101Access step 3");
+		cameraIcon.click();
 		Temp.tryCatch(3000);
+		Temp.checkUrl("https://alpha.audyx.com/#/otoscope", webDriver.getCurrentUrl(), "Test OTO-101 step 3");
+		Temp.tryCatch(3000);
+		System.out.println("===Test OTO-101 finished===");
 	}
 
-	public static void OTO201Access() {
+	public void OTO201Access() {
 
 		WebElement rightEar = webDriver.findElement(By.cssSelector(
 				"#audyx-main .body section .view-animate :nth-child(1) :nth-child(2) .otoscope-ear .ear "));
@@ -84,24 +90,24 @@ public class Otoscopy {
 		WebElement setupLink = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .empty-otoscope .device-status-text .device-status-action"));
 		String setupLink1 = Temp.printElementText(setupLink);
-		Temp.checkContainString(setupLink1, "Setup", "Test OTO-201ImageCapture step 1");
+		Temp.checkContainString(setupLink1, "Setup", "Test OTO-201 step 1");
 
 		setupLink.click();
 		Temp.tryCatch(3000);
-		Temp.checkUrl("https://alpha.audyx.com/#/audio-setup", webDriver.getCurrentUrl(),
-				"Test OTO-201ImageCapture step 2");
+		Temp.checkUrl("https://alpha.audyx.com/#/audio-setup", webDriver.getCurrentUrl(), "Test OTO-201 step 2");
 
 		WebElement addCabin = webDriver.findElement(By.cssSelector("#audyx-main .view-animate .top-panel .fa-plus"));
 		addCabin.click();
 		Temp.tryCatch(3000);
-		WebElement insertNewCabin = webDriver
-				.findElement(By.cssSelector("#audyx-main section .view-animate .top-panel input"));
-		insertNewCabin.sendKeys("b");
-		WebElement createCabin = webDriver.findElement(
-				By.cssSelector("#audyx-main .view-animate .top-panel .btn.btn-primary.create-or-edit-item"));
-		createCabin.click();
-		WebElement otoscopyArea = webDriver.findElement(By.cssSelector(" #s2id_autogen7 .select2-chosen .placeholder"));
+		WebElement insertNewCabin = webDriver.findElement(By.cssSelector("#audyx-main .view-animate .top-panel input"));
+		insertNewCabin.sendKeys("Otoscopy Cabin");
+		WebElement submitCabin = webDriver
+				.findElement(By.cssSelector("#audyx-main .view-animate .top-panel .create-or-edit-item .btn-primary"));
+		submitCabin.click();
+		Temp.tryCatch(4000);
+		WebElement otoscopyArea = webDriver.findElement(By.cssSelector("#audyx-main :nth-child(4) .select2-chosen"));
 		otoscopyArea.click();
+		Temp.tryCatch(4000);
 		WebElement chooseOtoscopyDevice = webDriver.findElement(By
 				.cssSelector("#select2-drop .select2-highlighted .select2-result-label .device-option .device-label"));
 		chooseOtoscopyDevice.click();
@@ -116,29 +122,33 @@ public class Otoscopy {
 
 		WebElement deviceStatus = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .empty-otoscope .device-status-text"));
-		String deviceConnected = Temp.printElementText(deviceStatus);
-		Temp.checkContainString(deviceConnected, "Device is connected", "Test OTO-201ImageCapture step 3");
+		// String deviceConnected = Temp.printElementText(deviceStatus);
+		String deviceConnected = Temp.splitStringWithSpecialChar(deviceStatus, "<");
+		Temp.checkContainString(deviceConnected, "Device is connected", "Test OTO-201 step 3");
 
 // =====left ear
-		leftEar.click();
+		WebElement leftEar2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .body section .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-ear .ear"));
+
+		leftEar2.click();
 		Temp.tryCatch(2000);
 		WebElement submitOtoscopy = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-panel.edit-otoscope .fa-check.clickable"));
-		System.out.println("Test OTO-201ImageCapture step 4 passed");
+		System.out.println("Test OTO-201 step 4 passed");
 		submitOtoscopy.click();
 		Temp.tryCatch(7000);
 		WebElement leftImage = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-panel .otoscope-image"));
-		System.out.println("Test OTO-201ImageCapture step 5 passed");
+		System.out.println("Test OTO-201 step 5 passed");
 
-		WebElement leftEar2 = webDriver.findElement(By.cssSelector(
+		WebElement leftEar3 = webDriver.findElement(By.cssSelector(
 				"#audyx-main .body section .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-ear .ear"));
-		leftEar2.click();
+		leftEar3.click();
 		Temp.tryCatch(3000);
 
 		WebElement previousImageLeft = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-panel.edit-otoscope .previous-otoscope.clickable"));
-		System.out.println("Test OTO-201ImageCapture step 6 passed");
+		System.out.println("Test OTO-201 step 6 passed");
 
 		WebElement submitOtoscopy2Left = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-panel.edit-otoscope .fa-check.clickable"));
@@ -146,33 +156,35 @@ public class Otoscopy {
 		Temp.tryCatch(6000);
 		WebElement confirmEditOtoscopyModalLeft = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-panel.edit-otoscope .panel-confirm"));
-		System.out.println("Test OTO-201ImageCapture step 7 passed");
+		System.out.println("Test OTO-201 step 7 passed");
 
 		WebElement confirmEditOtosocpyLeft = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(1) :nth-child(1) :nth-child(1) .otoscope-panel.edit-otoscope .panel-confirm .btn-primary"));
 		confirmEditOtosocpyLeft.click();
 		Temp.tryCatch(3000);
-		System.out.println("Test OTO-201ImageCapture step 8 passed");
+		System.out.println("Test OTO-201 step 8 passed");
 // ===right ear
-		rightEar.click();
-		Temp.tryCatch(2000);
-		WebElement submitOtoscopyRight = webDriver.findElement(By.cssSelector(
-				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .fa-check.clickable"));
-		System.out.println("Test OTO-201ImageCapture step 9.1 passed");
-		submitOtoscopy.click();
-		Temp.tryCatch(7000);
-		WebElement rightImage = webDriver.findElement(By.cssSelector(
-				"#audyx-main .view-animate :nth-child(1) :nth-child(2) :nth-child(2) .otoscope-panel .otoscope-image"));
-		System.out.println("Test OTO-201ImageCapture step 9.2 passed");
-
 		WebElement rightEar2 = webDriver.findElement(By.cssSelector(
 				"#audyx-main .body section .view-animate :nth-child(1) :nth-child(2) .otoscope-ear .ear "));
 		rightEar2.click();
+		Temp.tryCatch(2000);
+		WebElement submitOtoscopyRight = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .fa-check.clickable"));
+		System.out.println("Test OTO-201 step 9.1 passed");
+		submitOtoscopyRight.click();
+		Temp.tryCatch(7000);
+		WebElement rightImage = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(1) :nth-child(2) :nth-child(2) .otoscope-panel .otoscope-image"));
+		System.out.println("Test OTO-201 step 9.2 passed");
+
+		WebElement rightEar3 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .body section .view-animate :nth-child(1) :nth-child(2) .otoscope-ear .ear "));
+		rightEar3.click();
 		Temp.tryCatch(3000);
 
 		WebElement previousImageRight = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .previous-otoscope.clickable"));
-		System.out.println("Test OTO-201ImageCapture step 9.3 passed");
+		System.out.println("Test OTO-201 step 9.3 passed");
 
 		WebElement submitOtoscopy2Right = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .fa-check.clickable"));
@@ -180,14 +192,93 @@ public class Otoscopy {
 		Temp.tryCatch(6000);
 		WebElement confirmEditOtoscopyModalRight = webDriver.findElement(By.cssSelector(
 				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .panel-confirm"));
-		System.out.println("Test OTO-201ImageCapture step 9.4 passed");
+		System.out.println("Test OTO-201 step 9.4 passed");
 
 		WebElement confirmEditOtosocpyRight = webDriver.findElement(By.cssSelector(
-				"audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .panel-confirm .btn-primary"));
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .panel-confirm .btn-primary"));
 		confirmEditOtosocpyRight.click();
 		Temp.tryCatch(3000);
-		System.out.println("Test OTO-201ImageCapture step 9.5 passed");
+		System.out.println("Test OTO-201 step 9.5 passed");
+		System.out.println("===Test OTO-201 finished===");
+	}
 
+	public void OTO202EditDelete() {
+
+		WebElement firstOtoscopyDate = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) :nth-child(2) .date-edit-container .otoscope-date"));
+		String firstOtoscopyDate1 = Temp.printElementText(firstOtoscopyDate);
+		WebElement delteOtoscopy = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel .date-edit-container .fa.fa-trash-o.clickable"));
+		WebElement editOtoscopy = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel .date-edit-container .fa.fa-pencil.clickable"));
+		System.out.println("Test OTO-202 step 1 passed");
+
+		editOtoscopy.click();
+		Temp.tryCatch(4000);
+		WebElement previousImage = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .previous-otoscope.clickable"));
+		System.out.println("Test OTO-202 step 2 passed");
+
+		WebElement takeSnapShot = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .fa.fa-check.clickable"));
+		takeSnapShot.click();
+		Temp.tryCatch(10000);
+		WebElement editOtoscopyConfirm = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2)  :nth-child(2) .otoscope-panel.edit-otoscope .panel-confirm"));
+		System.out.println("Test OTO-202 step 3 passed");
+
+		WebElement cancelEditConfirm = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2)  :nth-child(2) .otoscope-panel.edit-otoscope .panel-confirm a"));
+		cancelEditConfirm.click();
+		Temp.tryCatch(10000);
+		WebElement previousImage2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .previous-otoscope.clickable"));
+		System.out.println("Test OTO-202 step 4 passed");
+
+		WebElement takeSnapShot2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .fa.fa-check.clickable"));
+		takeSnapShot2.click();
+		Temp.tryCatch(10000);
+		WebElement acceptSnapshot = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel.edit-otoscope .panel-confirm .btn.btn-primary"));
+		Temp.tryCatch(10000);
+		acceptSnapshot.click();
+		Temp.tryCatch(8000);
+		WebElement secondOtoscopyDate = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) :nth-child(2) .date-edit-container .otoscope-date"));
+		String secondOtoscopyDate2 = Temp.printElementText(secondOtoscopyDate);
+		Temp.checkDiffString(secondOtoscopyDate2, firstOtoscopyDate1, "Test OTO-202 step 5");
+
+		delteOtoscopy.click();
+		Temp.tryCatch(3000);
+		WebElement deleteOtoscopyPanel = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2)  :nth-child(2) :nth-child(2).otoscope-panel .panel-confirm"));
+		System.out.println("Test OTO-202 step 6 passed");
+
+		WebElement cancelDeleteConfirm = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2)  :nth-child(2) :nth-child(2).otoscope-panel .panel-confirm a"));
+		cancelDeleteConfirm.click();
+		Temp.tryCatch(4000);
+		
+		WebElement thirdoscopyDate = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) :nth-child(2) .date-edit-container .otoscope-date"));
+		String thirdOtoscopyDate3 = Temp.printElementText(thirdoscopyDate);
+		Temp.checkEqualString(thirdOtoscopyDate3, secondOtoscopyDate2, "Test OTO-202 step 7");
+
+		WebElement delteOtoscopy2 = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) .otoscope-panel .date-edit-container .fa.fa-trash-o.clickable"));
+		delteOtoscopy2.click();
+		Temp.tryCatch(4000);
+		
+		WebElement acceptDeleteConfirm = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2)  :nth-child(2) :nth-child(2).otoscope-panel .panel-confirm  .btn.btn-primary"));
+		acceptDeleteConfirm.click();
+		Temp.tryCatch(4000);
+		WebElement forthOtoscopyDate = webDriver.findElement(By.cssSelector(
+				"#audyx-main .view-animate :nth-child(2) :nth-child(2) :nth-child(2) .date-edit-container .otoscope-date"));
+		String forthOtoscopyDate4 = Temp.printElementText(forthOtoscopyDate);
+		Temp.checkEqualString(forthOtoscopyDate4, firstOtoscopyDate1, "Test OTO-202 step 8");
+		System.out.println("===Test OTO-202 finished===");
 	}
 
 }
