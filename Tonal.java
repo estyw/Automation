@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByCssSelector;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,6 +44,7 @@ public class Tonal {
 		password.sendKeys("123456Qw");
 		submit.click();
 		Temp.tryCatch(10000);
+
 	}
 
 	// Navigate to tonal test via nav bar
@@ -269,7 +272,7 @@ public class Tonal {
 	/**
 	 * Disable all no-mandatory levels
 	 */
-	public static void TON202FrequenciesControl() {
+	public void TON202FrequenciesControl() {
 		WebElement tonalNavBar = webDriver
 				.findElement(By.cssSelector("#audyx-main .menu-bar .tests .test-wrap.test1 .tonal"));
 		tonalNavBar.click();
@@ -295,10 +298,272 @@ public class Tonal {
 	}
 
 	/**
-	 * 
+	 * Play tonal test
 	 */
-	public static void TON203Play() {
-		// no yes no yes no no yes
+	public void TON203Play() {
+		WebElement startPlay = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content .panel-confirm.panel-test-init .fa-play"));
+		startPlay.click();
+		Temp.tryCatch(3000);
+
+		WebElement yes = webDriver.findElement(By.cssSelector(
+				" #test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(1) .thumb-up"));
+		WebElement no = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(2) .thumb-down"));
+
+		for (int i = 0; i < 2; i++) {
+			no.click();
+			Temp.tryCatch(3000);
+			yes.click();
+			Temp.tryCatch(3000);
+			no.click();
+			Temp.tryCatch(3000);
+			yes.click();
+			Temp.tryCatch(3000);
+			no.click();
+			Temp.tryCatch(3000);
+			no.click();
+			Temp.tryCatch(3000);
+			yes.click();
+			Temp.tryCatch(3000);
+		}
+		WebElement newTestButton = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body .actions button.btn.btn-primary.pull-right.next-ear :nth-child(1)"));
+		newTestButton.click();
+		Temp.tryCatch(2000);
+
+		WebElement startPlay1 = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content .panel-confirm.panel-test-init .fa-play"));
+		Temp.checkButtonClickable(startPlay1, "Test TON-203 step 1");
+
+		startPlay1.click();
+		Temp.tryCatch(4000);
+		WebElement yes2 = webDriver.findElement(By.cssSelector(
+				" #test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(1) .thumb-up"));
+		WebElement no2 = webDriver.findElement(By.cssSelector(
+				" #test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(2) .thumb-down"));
+
+		for (int i = 0; i < 2; i++) {
+			no.click();
+			Temp.tryCatch(3000);
+			yes.click();
+			Temp.tryCatch(3000);
+			no.click();
+			Temp.tryCatch(3000);
+			yes.click();
+			Temp.tryCatch(3000);
+			no.click();
+			Temp.tryCatch(3000);
+			no.click();
+			Temp.tryCatch(3000);
+			yes.click();
+			Temp.tryCatch(3000);
+		}
+
+		WebElement restartButton = webDriver.findElement(
+				By.cssSelector("#test-screen :nth-child(1) :nth-child(2) .panel-body .actions :nth-child(2)"));
+		restartButton.click();
+		Temp.tryCatch(3000);
+		WebElement restartModal = webDriver
+				.findElement(By.cssSelector("#test-screen :nth-child(1) :nth-child(2) :nth-child(2).panel-exit-test"));
+		WebElement acceptRestartTest = webDriver
+				.findElement(By.cssSelector("#test-screen :nth-child(1) :nth-child(2) :nth-child(2) .btn-primary"));
+		acceptRestartTest.click();
+		Temp.tryCatch(4000);
+		WebElement startPlay2 = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content .panel-confirm.panel-test-init .fa-play"));
+		System.out.println("Test TON-203 step 2 passed");
+
+		System.out.println("This is a manual test");
+		WebElement currentFre1 = webDriver.findElement(By.cssSelector(
+				"#test-screen .col-lg-6.col-no-left-padding .top-right-panel :nth-child(1) .graph-frequencies .loop-values .loop-value.current .title"));
+		String currentFrequency1 = Temp.printElementText(currentFre1);
+		WebElement leftArrow = webDriver.findElement(By.cssSelector(
+				"#test-screen .col-lg-6.col-no-left-padding .top-right-panel :nth-child(1) .graph-frequencies .btn-link .fa-long-arrow-left"));
+		leftArrow.click();
+		Temp.tryCatch(3000);
+		WebElement currentFre2 = webDriver.findElement(By.cssSelector(
+				"#test-screen .col-lg-6.col-no-left-padding .top-right-panel :nth-child(1) .graph-frequencies .loop-values .loop-value.current .title"));
+		String currentFrequency2 = Temp.printElementText(currentFre2);
+		Temp.checkDiffString(currentFrequency1, currentFrequency2, "Test TON-203 step 3");
+
+		WebElement currentDB1 = webDriver.findElement(By.cssSelector(
+				"#test-screen .col-no-left-padding .top-right-panel :nth-child(1) .graph-volume .volume-controls .flow-value.current .title"));
+		String currentDB11 = Temp.printElementText(currentDB1);
+		WebElement upDB = webDriver.findElement(By.cssSelector(
+				"#test-screen .col-no-left-padding .top-right-panel :nth-child(1) .graph-volume .volume-controls .btn-link:nth-child(1) .fa-long-arrow-up"));
+		upDB.click();
+		Temp.tryCatch(3000);
+		WebElement currentDB2 = webDriver.findElement(By.cssSelector(
+				"#test-screen .col-no-left-padding .top-right-panel :nth-child(1) .graph-volume .volume-controls .flow-value.current .title"));
+		String currentDB22 = Temp.printElementText(currentDB2);
+		Temp.checkDiffString(currentDB11, currentDB22, "Test TON-203 step 4");
+
+		WebElement downDB = webDriver.findElement(By.cssSelector(
+				"#test-screen .col-lg-6.col-no-left-padding .top-right-panel :nth-child(1) .graph-volume .volume-controls :nth-child(5) .fa-long-arrow-down"));
+		downDB.click();
+		Temp.tryCatch(3000);
+		downDB.click();
+		Temp.tryCatch(3000);
+		WebElement saveTestButton = webDriver.findElement(
+				By.cssSelector("#test-screen :nth-child(1) :nth-child(2) .panel-body .actions .save-test"));
+		Temp.checkButtonNotClickable(saveTestButton, "Test TON-203 step 5");
+
+		System.out.println("This is a guided test");
+		WebElement startPlay3 = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content .panel-confirm.panel-test-init .fa-play"));
+		startPlay3.click();
+		Temp.tryCatch(4000);
+		WebElement yes3 = webDriver.findElement(By.cssSelector(
+				" #test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(1) .thumb-up"));
+		WebElement no3 = webDriver.findElement(By.cssSelector(
+				" #test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(2) .thumb-down"));
+		yes3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		yes3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		yes3.click();
+		Temp.tryCatch(2000);
+		WebElement playIcon = webDriver.findElement(By
+				.cssSelector("#test-screen .col-lg-6.col-no-left-padding .top-right-panel :nth-child(1) .fa.fa-play"));
+		WebElement thresholdCircle = webDriver.findElement(
+				By.cssSelector("#test-type-2 :nth-child(1) .type-2 :nth-child(1) :nth-child(2) :nth-child(3) circle"));
+		System.out.println("Test TON-203 step 6");
+
+		WebElement restartButton2 = webDriver.findElement(
+				By.cssSelector("#test-screen :nth-child(1) :nth-child(2) .panel-body .actions :nth-child(2)"));
+		restartButton2.click();
+		Temp.tryCatch(3000);
+		WebElement restartModal2 = webDriver
+				.findElement(By.cssSelector("#test-screen :nth-child(1) :nth-child(2) :nth-child(2).panel-exit-test"));
+		System.out.println("Test TON-203 step 7 passed");
+
+		WebElement continueCurrentTest = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) :nth-child(1) :nth-child(2).panel-confirm.panel-exit-test a"));
+		continueCurrentTest.click();
+		Temp.tryCatch(4000);
+		WebElement thresholdCircle2 = webDriver.findElement(
+				By.cssSelector("#test-type-2 :nth-child(1) .type-2 :nth-child(1) :nth-child(2) :nth-child(3) circle"));
+		System.out.println("Test TON-203 step 8 passed");
+
+		yes3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		yes3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		yes3.click();
+		Temp.tryCatch(2000);
+		WebElement newTestButton2 = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body .actions button.btn.btn-primary.pull-right.next-ear :nth-child(1)"));
+		newTestButton2.click();
+		Temp.tryCatch(4000);
+		WebElement startPlay4 = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content .panel-confirm.panel-test-init .fa-play"));
+		System.out.println("Test TON-203 step 9 passed");
+
+		startPlay4.click();
+		Temp.tryCatch(4000);
+
+		yes3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		yes3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		no3.click();
+		Temp.tryCatch(2000);
+		yes3.click();
+		Temp.tryCatch(2000);
+
+		WebElement saveTest = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body .btn.btn-primary.pull-right.save-test"));
+		saveTest.click();
+		Temp.tryCatch(3000);
+		Temp.checkContainString(webDriver.getCurrentUrl(), "/patientFolder/test/tone/", "Test TON-203 step 10");
+	}
+
+	public void Ton205Remeasure() {
+		WebElement tonalNavBar = webDriver
+				.findElement(By.cssSelector("#audyx-main .menu-bar .tests .test-wrap.test1 .tonal"));
+		tonalNavBar.click();
+		Temp.tryCatch(5000);
+
+		WebElement startPlay = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content .panel-confirm.panel-test-init .fa-play"));
+		startPlay.click();
+		Temp.tryCatch(4000);
+
+		WebElement yes = webDriver.findElement(By.cssSelector(
+				" #test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(1) .thumb-up"));
+		WebElement no = webDriver.findElement(By.cssSelector(
+				" #test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) :nth-child(1) .ad-judge.can-mark :nth-child(2) .thumb-down"));
+
+		System.out.println("Test TON-205 step 1 passed");
+		yes.click();
+		Temp.tryCatch(2000);
+		no.click();
+		Temp.tryCatch(2000);
+		WebElement remeasure = webDriver.findElement(By.cssSelector(
+				"#test-screen :nth-child(1) :nth-child(2) .panel-body :nth-child(1) .ad-vocal-test-content :nth-child(3) .ad-reload a i"));
+		remeasure.click();
+		Temp.tryCatch(3000);
+		WebElement newDataPoint = webDriver.findElement(By.cssSelector("#svg-flow circle"));
+		System.out.println("Test TON-205 step 2 passed");
+	}
+
+	/**
+	 * View all element in tonal graph in patient folder
+	 */
+	public void TON301AudiogramGraph() {
+		WebElement audyxIcon = webDriver.findElement(By.cssSelector("#audyx-main .menu-bar .audyx-status"));
+		audyxIcon.click();
+		Temp.tryCatch(2000);
+
+		WebElement searchPatient = webDriver.findElement(By.className("search-patient"));
+		searchPatient.sendKeys("with many tests");
+		Temp.tryCatch(3000);
+		WebElement patientName = webDriver
+				.findElement(By.cssSelector("#patient-list-body table tbody .patient-fullname a"));
+		patientName.click();
+		Temp.tryCatch(3000);
+		Temp.checkContainString(webDriver.getCurrentUrl(), "patientFolder", "Test TON-301 step 1");
+
+		WebElement increaseView = webDriver.findElement(By.cssSelector("#test-type-2 .panel :nth-child(1) button"));
+		JavascriptExecutor jse = (JavascriptExecutor) webDriver;
+		jse.executeScript("scroll(0, -10000);");
+		Temp.tryCatch(5000);
+		increaseView.click();
+		Temp.tryCatch(3000);
+		WebElement choolseAnotherResults = webDriver.findElement(By.cssSelector(
+				"#test-type-2 :nth-child(1) :nth-child(1) :nth-child(1) :nth-child(1).legends-container :nth-child(3) .prevent-selection .test-selector"));
+		choolseAnotherResults.click();
+		Temp.tryCatch(3000);
+		WebElement previousPointInGraph = webDriver.findElement(By.cssSelector(
+				"#test-type-2 :nth-child(2) :nth-child(1) .row .div-chart.type-2 :nth-child(1) :nth-child(1)  :nth-child(2) :nth-child(3) circle:nth-child(10)"));
+		System.out.println("Test TON-301 step 2 passed");
+
+		WebElement filterView = webDriver.findElement(By.cssSelector("#test-type-2 .panel .row .chart-filter"));
+		filterView.click();
+		Temp.tryCatch(3000);
+		WebElement lastVisit = webDriver
+				.findElement(By.cssSelector("#test-type-2 .panel .row .chart-filter :nth-child(2)"));
+		lastVisit.click();
+		Temp.tryCatch(3000);
+		System.out.println("Test TON-301 step 3 passed");
+
 	}
 
 	/**
